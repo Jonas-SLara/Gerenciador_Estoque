@@ -1,0 +1,126 @@
+-----------------
+  MAVEN NO LINUX
+-----------------
+
+------------------
+Instalação via Apt
+------------------
+    -É mais simples porém tem algumas avarias
+    -é mais desatualizada do que tem nos repositórios maven, neste momento
+    em 2025 por exemplo, instala a versao 3.8.7 mas no maven a atual é a
+    3.9.6
+
+    -a presente versão que instalei via apt:
+    ❌ Não define a versão do JDK (Java 1.5 ou 1.6 por padrão!)
+
+    ❌ Não define UTF-8 como encoding padrão
+
+    ❌ Não configura plugins atualizados (como maven-compiler-plugin)
+
+    ⚠️ Mostra warnings tipo:
+
+    "Source option 1.5 is no longer supported"
+
+    "File encoding has not been set"
+
+sudo apt install maven
+----------------------
+
+⚠️  MUDANÇAS QUE TALVEZ SEJAM NESCESSARIAS
+
+Ao usar mvn generate no Linux, talvez seja necessário editar manualmente o pom.xml
+
+1. A versão correta do JDK e o UTF8 (maven.compiler.source / target), ADICIONE ESTE CAMPO
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+*USE SUA VERSAO DO JDK INSTALADA
+
+2. Plugins como o maven-compiler-plugin, ADICIONE ESTE CAMPO
+    
+<build>
+    <finalName>app</finalName>
+    <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.11.0</version>
+      <configuration>
+        <source>21</source>
+        <target>21</target>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
+**importante tambe conferir a versao e o tipo de empacotamento por
+exemplo se for um war deve ter este plugin no buil para versoes mais
+recentes do jdk se nao o mavem nao sabera qual versao usar
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-war-plugin</artifactId>
+  <version>3.4.0</version>
+</plugin>
+
+
+3. Dependências mais modernas, como JUnit 5 em vez de JUnit 4 OU de sua preferencia para
+o projeto como um JDBC etc...
+
+
+***apos ter instalado o mvn use este tutorial para rodar no terminal para criar projetos***
+
+--criar um projeto quickstart--
+-------------------------------
+
+mvn archetype:generate \
+  -DarchetypeGroupId=org.apache.maven.archetypes \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.4 \
+  -DgroupId=com.seu.pacote \
+  -DartifactId=seu-projeto \
+  -Dversion=1.0-SNAPSHOT \
+  -DinteractiveMode=false
+
+estrutura deste projeto
+-----------------------
+seu-projeto/
+├── pom.xml                 # Arquivo principal de configuração do Maven
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/seu/pacote/App.java  # Classe principal
+│   └── test/
+│       └── java/
+│           └── com/seu/pacote/AppTest.java  # Teste unitário
+
+
+
+--criar um projeto webapp--
+--------------------------------
+mvn archetype:generate \
+    -DarchetypeGroupId=org.apache.maven.archetypes \
+    -DarchetypeArtifactId=maven-archetype-webapp \
+    -DarchetypeVersion=1.4 \
+    -DgroupId=com.seu.pacote \
+    -DartifactId=seu-projeto \
+    -DinteractiveMode=false
+
+estrutura deste projeto
+-----------------------
+
+---Comandos do maven para executar na raiz de seu projeto onde estiver o pom.xml---
+--------------------------------------------------------------------------------
+
+mvn compile	Compila os arquivos .java → cria target/
+mvn exec:java -Dexec.mainClass="com.seu.pacote.App"	Roda a main() da classe App
+mvn test	Executa os testes em src/test/java/
+mvn clean	Limpa os arquivos compilados (target/)
+mvn package	Compila e empacota o projeto (gera .jar)
+mvn install	Instala o .jar no repositório local do Maven
+
+
+
+

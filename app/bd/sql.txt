@@ -1,0 +1,44 @@
+---------------------
+DEFINIÇÂO DAS TABELAS
+---------------------
+
+CREATE TABLE USUARIO(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL UNIQUE, --so pode haver um email
+	senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE SETOR(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE GERENTE(
+	id_gerente SERIAL PRIMARY KEY,
+	id_usuario INT NOT NULL UNIQUE, --um usuario só pode ser um gerente
+	id_setor INT NOT NULL,
+	FOREIGN KEY (id_usuario) REFERENCES USUARIO(id),
+	FOREIGN KEY (id_setor) REFERENCES SETOR(id),
+	salario NUMERIC(8,2) NOT NULL
+);
+
+CREATE TABLE FUNCIONARIO(
+	id_funcionario SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+	id_gerente INT NOT NULL,
+	salario NUMERIC(8,2) NOT NULL,
+	FOREIGN KEY (id_gerente) REFERENCES GERENTE(id_gerente)
+);
+
+
+CREATE TABLE PRODUTO(
+	id_produto SERIAL PRIMARY KEY,
+	nome VARCHAR(50),
+	preco NUMERIC(8,2),
+    quantidade INT,
+	id_setor INT NOT NULL,
+	FOREIGN KEY (id_setor) REFERENCES SETOR(id)
+);
+
+
