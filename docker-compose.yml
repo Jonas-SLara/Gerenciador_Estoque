@@ -9,14 +9,3 @@ services:
       POSTGRES_DB: estoque
     ports:
       - "5432:5432"
-
-  wildfly:
-    build: .
-    container_name: wildfly
-    ports:
-      - "8080:8080"
-      - "9990:9990"
-    volumes:
-      - ./deployments:/opt/jboss/wildfly/standalone/deployments
-    depends_on:
-      - postgres
