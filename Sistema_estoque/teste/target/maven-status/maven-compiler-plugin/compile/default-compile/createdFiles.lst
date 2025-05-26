@@ -1,0 +1,10 @@
+com/atacadao/util/Teste.class
+com/atacadao/dao/FuncionarioDAO.class
+com/atacadao/dao/UsuarioDAO.class
+com/atacadao/dao/ProdutoDAO.class
+com/atacadao/model/Produto.class
+com/atacadao/dao/Conexao.class
+com/atacadao/model/Gerente.class
+com/atacadao/model/Funcionario.class
+com/atacadao/dao/GerenteDAO.class
+com/atacadao/model/Usuario.class
