@@ -18,6 +18,7 @@
 </head>
 <body>
     <h2>Produtos cadastrados</h2>
+    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
 <!-- taglib choose da core tem a função de servir como um switch case enquanto
     a taglib forEach tem a mesma função de uma estrutura de repetição-->
     <c:choose>
@@ -31,6 +32,7 @@
                     <th>quantidade:</th>
                     <th>valor:</th>
                     <th>id:</th>
+                    <th>ação:</th>
                 </tr>
                 <c:forEach var="p" items="${listaProdutos}">
                     <tr>
@@ -38,12 +40,21 @@
                         <td>${p.quantidade}</td>
                         <td>${p.valor}</td>
                         <td>${p.id}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao
+                            =editarProduto&&info=${p.id}">Editar</a>
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao
+                            =excluirProduto&&info=${p.id}">Excluir</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
         </c:otherwise>
     </c:choose>
     <br>
-    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
+
+    <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
 </body>
 </html>

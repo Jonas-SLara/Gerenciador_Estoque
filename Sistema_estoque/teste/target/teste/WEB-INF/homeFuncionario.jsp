@@ -29,7 +29,7 @@
         <li><strong>Celular: </strong> <c:out value="${sessionScope.usuario.celular}"/></li>
         <li><strong>Cargo: </strong> <c:out value="${sessionScope.funcionario.cargo}"/></li>
     </ul>
-
+    
     <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
 </body>
 </html>

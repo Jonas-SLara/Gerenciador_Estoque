@@ -14,10 +14,16 @@ public class UsuarioService {
         cpf_formatado = cpf_formatado.replaceAll("[^0-9]+", "");
         return cpf_formatado;
     }
+    /*formata o cpf com REGEX para retornar apenas os numeros do celular*/
+    public static String formatarCelular(String telefone){
+        String telefone_formatado = telefone.replaceAll("//.", "");
+        telefone_formatado = telefone_formatado.replaceAll("//-", "");
+        telefone_formatado = telefone_formatado.replaceAll("[^0-9]+", "");
+        return telefone_formatado;
+    }
 
     /*retorna null se o usuario não foi encontrado*/
     public Usuario buscarUsuario(String cpf){
-
         cpf = formatarCPF(cpf);
         Usuario u = udao.buscar_por_cpf(cpf);
         return u;
@@ -34,5 +40,11 @@ public class UsuarioService {
         if(u.getCpf().equals(cpf_formatado) && senha.equals(u.getSenha())) return true;
 
         return false;
+    }
+
+    public boolean cadastrarUsuario(Usuario u){
+        u.setCpf(formatarCPF(u.getCpf()));
+        u.setCelular(formatarCelular(u.getCelular()));
+        return  udao.inserirUsuario(u);
     }
 }

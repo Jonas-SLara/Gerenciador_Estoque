@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false" %>
 
 <%
@@ -24,28 +24,36 @@
     <h2>Bem vindo, <c:out value="${sessionScope.usuario.nome}"/>!</h1>
     <h3>Confira seus dados</h3>
     <ul>
-      <li><strong>Nome: </strong> <c:out value="${sessionScope.usuario.nome}"/> </li>
+      <li><strong>Nome: </strong> <c:out value="${sessionScope.gerente.usuario.nome}"/> </li>
       <li><strong>CPF: </strong> <c:out value="${sessionScope.usuario.cpf}"/> </li>
-      <li><strong>Salario: </strong> <c:out value="${sessionScope.usuario.salario}"/></li>
-      <li><strong>Email: </strong> <c:out value="${sessionScope.usuario.email}"/></li>
-      <li><strong>Celular: </strong> <c:out value="${sessionScope.usuario.celular}"/></li>
+      <li><strong>Salario: </strong> <c:out value="${sessionScope.gerente.usuario.salario}"/></li>
+      <li><strong>Email: </strong> <c:out value="${sessionScope.gerente.usuario.email}"/></li>
+      <li><strong>Celular: </strong> <c:out value="${sessionScope.gerente.usuario.celular}"/></li>
       <li><strong>Bonificação: </strong> <c:out value="${sessionScope.gerente.bonificacao}"/></li>
     </ul>
 
-      <h3>Gerenciamento</h3>
+      <h3>Gerenciamento dos funcionários</h3>
       <ul>
         <li>
           <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
             Ver seus Funcionarios
           </a>
+        </li>
+        <li>
           <a href="${pageContext.request.contextPath}/gerenteServlet?acao=cadastrarFuncionario">
             Cadastrar novo Funcionario
           </a>
         </li>
+      </ul>
+
+      <h3>Gerenciamento de produtos</h3>
+      <ul>
         <li>
           <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
             Ver seus Produtos
           </a>
+        </li>
+        <li>
           <a href="${pageContext.request.contextPath}/gerenteServlet?acao=cadastrarProduto">
             Cadastrar Produto
           </a>

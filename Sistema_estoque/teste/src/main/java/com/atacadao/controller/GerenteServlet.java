@@ -55,11 +55,24 @@ public class GerenteServlet extends HttpServlet{
             dispatcher.forward(req, resp);
             return;
         }
-        
+
+        if("cadastrarFuncionario".equals(acao)){
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/verFuncionarios.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
+
+        if ("cadastrarProduto".equals(acao)){
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/verProdutos.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
+
         if ("voltar".equals(acao)) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/homeGerente.jsp");
             dispatcher.forward(req, resp);
         }
+
         
     }
 }

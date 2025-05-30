@@ -60,12 +60,16 @@ public class LoginServlet extends HttpServlet{
                 dispatcher.forward(resq, resp);
                 return;
             }
+            //se nao encontrado então o usuario ainda nao foi cadastrado
+            resq.setAttribute("erro", "Seu CPF nao foi cadastrado como integrante da empresa ainda, fale com o RH");
+            resq.getRequestDispatcher("/pages/login.jsp").forward(resq, resp);
+            return;
         }
         
         else{
             //dados invalidos
             resq.setAttribute("erro", "CPF ou senha incorretos");
-            resq.getRequestDispatcher("/pages/login.jsp").forward(resq, resp);  
+            resq.getRequestDispatcher("/pages/login.jsp").forward(resq, resp);
         }
     }
 

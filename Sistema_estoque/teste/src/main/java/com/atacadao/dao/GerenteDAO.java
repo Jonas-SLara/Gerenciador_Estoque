@@ -96,6 +96,7 @@ public class GerenteDAO {
                 u.setNome(rs.getString("nome"));
                 u.setEmail(rs.getString("email"));
                 u.setCelular(rs.getString("celular"));
+                u.setCpf(rs.getString("cpf"));
                 f.setUsuario(u);
                 funcionarios.add(f);
             }

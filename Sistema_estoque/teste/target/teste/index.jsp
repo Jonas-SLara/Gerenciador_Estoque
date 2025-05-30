@@ -10,8 +10,8 @@
   <body>
     <nav>
       <ul><a href="pages/login.jsp">Fazer login</a></ul>
+      <ul><a href="pages/cadastro.jsp">Cadastro Usuario</a></ul>
       <ul><a href="#">Ajuda com </a></ul>
-      <ul><a href="#">Converse Com um Gerente</a></ul>
       <ul><a href="#">RH</a></ul>
     </nav>
     <h1>Sistema de estoque da Atacadão</h1>

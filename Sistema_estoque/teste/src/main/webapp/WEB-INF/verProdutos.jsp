@@ -18,6 +18,7 @@
 </head>
 <body>
     <h2>Produtos cadastrados</h2>
+    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
 <!-- taglib choose da core tem a função de servir como um switch case enquanto
     a taglib forEach tem a mesma função de uma estrutura de repetição-->
     <c:choose>
@@ -53,6 +54,7 @@
         </c:otherwise>
     </c:choose>
     <br>
-    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
+
+    <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
 </body>
 </html>

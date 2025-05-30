@@ -27,13 +27,30 @@
         <c:otherwise>
             <table>
                 <tr>
-                    <th>Id:</th>
-                    <th>Cargo:</th>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Email</th
+                    <th>Celular</th>
+                    <th>Salário</th>
+                    <th>Cargo</th>
+                    <th>Opção</th>
                 </tr>
-                <c:forEach var="funcionario" items="${listaFuncionarios}">
+                <c:forEach var="f" items="${listaFuncionarios}">
                     <tr>
-                        <td>${funcionario.id}</td>
-                        <td>${funcionario.cargo}</td>
+                        <td>${f.id}</td>
+                        <td>${f.usuario.nome}</td>
+                        <td>${f.usuario.email}</td>
+                        <td>${f.usuario.celular}</td>
+                        <td>${f.usuario.salario}</td>
+                        <td>${f.cargo}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?opcao
+                            =editarFuncionario&&info=${f.id}"> Editar </a>
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?opcao
+                            =removerFuncionario&&info=${f.id}"> Remover </a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -41,5 +58,6 @@
     </c:choose>
     <br>
     <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
+
 </body>
 </html>

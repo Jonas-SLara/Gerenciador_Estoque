@@ -32,6 +32,7 @@ public class FuncionarioDAO {
                     u.setEmail(rs.getString("email"));
                     u.setNome(rs.getString("nome"));
                     u.setSalario(rs.getDouble("salario"));
+                    u.setCpf(rs.getString("cpf"));
                     f.setUsuario(u);
                     funcionarios.add(f);
                 }

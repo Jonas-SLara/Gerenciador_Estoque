@@ -10,7 +10,7 @@
     <title>Página de Login</title>
 </head>
 <body>
-    <a href="../index.jsp">Voltar</a>
+    <a href="${pageContext.request.contextPath}/index.jsp">Voltar</a>
     <h2>Formulário</h2>
 
     <c:if test = "${not empty erro}">
