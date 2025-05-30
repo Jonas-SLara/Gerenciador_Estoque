@@ -2,11 +2,20 @@ package com.atacadao.model;
 
 public class Funcionario {
     private int id;
-    private int id_gerente;
-    private String cpf_usuario;
+    private int idGerente;
+    private String cpfUsuario;
     private String cargo;
-    
+    private Usuario usuario; //relacionado a um usuario
+
     public Funcionario(){}
+    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
     
     public String getCargo() {
         return cargo;
@@ -16,12 +25,12 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public String getCpf_usuario() {
-        return this.cpf_usuario;
+    public String getCpfUsuario() {
+        return this.cpfUsuario;
     }
 
-    public void setCpf_usuario(String cpf_usuario) {
-        this.cpf_usuario = cpf_usuario;
+    public void setCpfUsuario(String cpf_usuario) {
+        this.cpfUsuario = cpf_usuario;
     }
 
     public int getId() {
@@ -33,11 +42,11 @@ public class Funcionario {
     }
 
     public int getIdGerente() {
-        return this.id_gerente;
+        return this.idGerente;
     }
 
     public void setIdGerente(int id_gerente) {
-        this.id_gerente = id_gerente;
+        this.idGerente = id_gerente;
     }
 
 }

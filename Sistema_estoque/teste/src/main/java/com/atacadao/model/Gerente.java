@@ -5,7 +5,17 @@ public class Gerente {
     private int id;
     private String cpf_usuario;
     private Double bonificacao;
+    private Usuario usuario;
+    public Gerente(){}
     
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Double getBonificacao() {
         return bonificacao;
     }
@@ -13,8 +23,6 @@ public class Gerente {
     public void setBonificacao(Double bonificacao) {
         this.bonificacao = bonificacao;
     }
-
-    public Gerente(){}
 
     public int getId(){
         return this.id;

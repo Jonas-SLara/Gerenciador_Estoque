@@ -5,20 +5,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.atacadao.model.Gerente;
+import com.atacadao.model.Produto;
+import com.atacadao.model.Funcionario;
+import com.atacadao.model.Usuario;
 
 public class GerenteDAO {
     public ArrayList<Gerente> listar_gerentes(){
         ArrayList<Gerente> gerentes = new ArrayList<Gerente>();
-        String sql = "SELECT * FROM gerente";
+        String sql = "SELECT * FROM gerente g INNER JOIN usuario u "+
+        "ON g.cpf_usuario = u.cpf";
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
+                //seta gerente
                 Gerente g = new Gerente();
                 g.setCpfUsuario(rs.getString("cpf_usuario"));
                 g.setBonificacao(rs.getDouble("bonificacao"));
                 g.setId(rs.getInt("id"));
+                //seta usuario
+                Usuario u = new Usuario();
+                u.setCelular(rs.getString("celular"));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setSalario(rs.getDouble("salario"));
+                g.setUsuario(u);
                 gerentes.add(g);
             }
         } catch (SQLException e) {
@@ -29,18 +42,25 @@ public class GerenteDAO {
         return gerentes;
     }
 
-    public Gerente buscar_por_id(int id){
+    public Gerente buscar_gerente(String cpf_usuario){
         Gerente g = null;
-        String sql = "SELECT * FROM gerente WHERE id = ?";
+        String sql = "SELECT * FROM gerente g INNER JOIN usuario u "+
+        "ON g.cpf_usuario = u.cpf AND g.cpf_usuario = ?";
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setString(1, cpf_usuario);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 g = new Gerente();
-                g.setId(id);
+                g.setId(rs.getInt("id"));
                 g.setBonificacao(rs.getDouble("bonificacao"));
                 g.setCpfUsuario(rs.getString("cpf_usuario"));
+                Usuario u = new Usuario();
+                u.setCelular(rs.getString("celular"));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setSalario(rs.getDouble("salario"));
+                g.setUsuario(u);
             }else{
                 System.out.println("gerente não encontrado");
             }
@@ -51,6 +71,68 @@ public class GerenteDAO {
         }
         System.out.println("gerente buscado com sucesso");
         return g;
+    }
+    
+    public ArrayList<Funcionario> listar_seus_funcionarios(int id){
+        
+        String sql = "SELECT * FROM funcionario f INNER JOIN usuario u "+
+        "ON f.cpf_usuario = u.cpf AND f.id_gerente = ?";
+        ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+
+        try (Connection con = Conexao.obterConexao();
+                PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                //seta funcionario
+                Funcionario f = new Funcionario();
+                f.setCargo(rs.getString("cargo"));
+                f.setCpfUsuario(rs.getString("cpf_usuario"));
+                f.setId(rs.getInt("id"));
+                f.setIdGerente(rs.getInt("id_gerente"));
+                //seta usuario
+                Usuario u = new Usuario();
+                u.setSalario(rs.getDouble("salario"));
+                u.setNome(rs.getString("nome"));
+                u.setEmail(rs.getString("email"));
+                u.setCelular(rs.getString("celular"));
+                f.setUsuario(u);
+                funcionarios.add(f);
+            }
+        } catch (SQLException e) {
+            System.out.println("erro ao buscar funcionarios do gerente " +
+             id + " " + e.getMessage());
+            e.printStackTrace();
+        }
+        return funcionarios;
+    } 
+
+    public ArrayList<Produto> listar_seus_produtos(int id){
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        String sql = "SELECT * FROM gerente g, produto p " +
+        "WHERE g.id = p.id_gerente AND " +
+        "g.id = ?";
+
+        try (Connection con = Conexao.obterConexao();
+                PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produto p = new Produto();
+                p.setId(rs.getInt("id"));
+                p.setIdGerente(rs.getInt("id_gerente"));
+                p.setNome(rs.getString("nome"));
+                p.setQuantidade(rs.getInt("quantidade"));
+                p.setValor(rs.getDouble("valor"));
+                produtos.add(p);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("erro ao listar produtos do gerente " +
+            e.getMessage());
+            e.printStackTrace();
+        }
+        return produtos;
     }
 
     public boolean inserir_gerente(Gerente g){

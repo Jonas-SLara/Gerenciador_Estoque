@@ -7,21 +7,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.atacadao.model.Funcionario;
+import com.atacadao.model.Usuario;
 
 public class FuncionarioDAO {
 
     public ArrayList<Funcionario> listar_funcionarios(){
+
         ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-        String sql = "SELECT * FROM funcionario";
+        String sql = "SELECT * FROM funcionario f INNER JOIN usuario u "+
+        "ON f.cpf_usuario = u.cpf";
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()){
+                    //seta funcionario
                     Funcionario f = new Funcionario();
-                    f.setCpf_usuario(rs.getString("cpf_usuario"));
+                    f.setCpfUsuario(rs.getString("cpf_usuario"));
                     f.setId(rs.getInt("id"));
                     f.setCargo(rs.getString("cargo"));
                     f.setIdGerente(rs.getInt("id_gerente"));
+                    //seta usuario
+                    Usuario u = new Usuario();
+                    u.setCelular(rs.getString("celular"));
+                    u.setEmail(rs.getString("email"));
+                    u.setNome(rs.getString("nome"));
+                    u.setSalario(rs.getDouble("salario"));
+                    f.setUsuario(u);
                     funcionarios.add(f);
                 }
         } catch (SQLException e) {
@@ -32,19 +43,27 @@ public class FuncionarioDAO {
         return funcionarios;
     }
 
-    public Funcionario buscar_por_id(int id){
+    public Funcionario buscar_funcionario(String cpf_usuario){
         Funcionario f = null;
-        String sql ="SELECT * FROM funcionario WHERE id = ?";
+        String sql ="SELECT * FROM funcionario f INNER JOIN usuario u "+
+        "ON u.cpf_usuario = f.cpf AND cpf_usuario = ?";
+
         try (Connection con = Conexao.obterConexao();
-            PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            PreparedStatement stmt = con.prepareStatement(sql)){
+            stmt.setString(1, cpf_usuario);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 f = new Funcionario();
-                f.setCpf_usuario(rs.getString("cpf_usuario"));
+                f.setCpfUsuario(rs.getString("cpf_usuario"));
                 f.setIdGerente(rs.getInt("id_gerente"));
                 f.setCargo(rs.getString("cargo"));
                 f.setId(rs.getInt("id"));
+                Usuario u = new Usuario();
+                u.setCelular(rs.getString("celular"));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setSalario(rs.getDouble("salario"));
+                f.setUsuario(u);
                 System.out.println("funcionario encontrado");
             }else{
                 System.out.println("funcionario não encontrado");
@@ -61,7 +80,7 @@ public class FuncionarioDAO {
         String sql = "INSERT INTO funcionario (cpf_usuario, id_gerente, cargo) VALUES (?, ?, ?)";
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, f.getCpf_usuario());
+            stmt.setString(1, f.getCpfUsuario());
             stmt.setInt(2, f.getIdGerente());
             stmt.setString(3, f.getCargo());
             stmt.execute();
