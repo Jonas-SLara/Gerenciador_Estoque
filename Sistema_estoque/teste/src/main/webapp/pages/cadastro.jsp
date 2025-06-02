@@ -11,7 +11,7 @@
 </head>
 <body>
     <h2>Formulário de Cadastro de Usuario</h2>
-    <a href="../index.jsp">Voltar</a>
+    <a href="<%=request.getContextPath()%>/index.jsp">Voltar</a>
     <form method="post" action="<%=request.getContextPath()%>/usuarioServlet">
         <label for="nome">Nome:   </label>
         <input id="nome" name="nome" type="text" placeholder="digite seu nome"><br>
@@ -26,11 +26,9 @@
 
         <button type="submit" value="cadastrar" name="op">Cadastre-se</button>
         <button type="reset">Reset</button>
-
-        <c:if test="${not empty msg1}">
-            <h3 style="color:darkgreen">${msg1}</h3>
-            <h4 style="color: darkgreen">${msg2}</h4>
-        </c:if>
     </form>
+    <c:if test="${not empty msg}">
+            <h3>${msg}</h3>
+    </c:if>
 </body>
 </html>

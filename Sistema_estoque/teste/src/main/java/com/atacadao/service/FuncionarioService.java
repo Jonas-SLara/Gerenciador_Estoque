@@ -14,7 +14,7 @@ public class FuncionarioService {
         Funcionario f = fdao.buscar_funcionario(cpf);
         return f;
     }
-
+    
     public ArrayList<Funcionario> list(){
         return fdao.listar_funcionarios();
     }

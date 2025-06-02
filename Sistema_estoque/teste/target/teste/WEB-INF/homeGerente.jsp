@@ -9,7 +9,6 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -17,7 +16,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0">
   </head>
   <body>
-    
+    <a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a>
     <h1>Sistema de estoque atacadão (Gerente)</h2>
     <h2>${pageContext.request.contextPath}</h2>
 
@@ -31,8 +30,9 @@
       <li><strong>Celular: </strong> <c:out value="${sessionScope.gerente.usuario.celular}"/></li>
       <li><strong>Bonificação: </strong> <c:out value="${sessionScope.gerente.bonificacao}"/></li>
     </ul>
-
-      <h3>Gerenciamento dos funcionários</h3>
+    
+    <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
+    <h3>Gerenciamento dos funcionários</h3>
       <ul>
         <li>
           <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
@@ -40,7 +40,8 @@
           </a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=cadastrarFuncionario">
+
+          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarFuncionario">
             Cadastrar novo Funcionario
           </a>
         </li>
@@ -54,12 +55,10 @@
           </a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=cadastrarProduto">
+          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarProduto">
             Cadastrar Produto
           </a>
         </li>
       </ul>
-
-      <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
   </body>
 </html>

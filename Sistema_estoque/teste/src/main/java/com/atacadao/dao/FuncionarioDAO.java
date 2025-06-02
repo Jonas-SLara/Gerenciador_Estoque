@@ -47,7 +47,7 @@ public class FuncionarioDAO {
     public Funcionario buscar_funcionario(String cpf_usuario){
         Funcionario f = null;
         String sql ="SELECT * FROM funcionario f INNER JOIN usuario u "+
-        "ON u.cpf_usuario = f.cpf AND cpf_usuario = ?";
+        "ON u.cpf = f.cpf_usuario AND cpf_usuario = ?";
 
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql)){

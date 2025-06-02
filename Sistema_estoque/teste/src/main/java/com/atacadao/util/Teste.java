@@ -21,15 +21,8 @@ class Teste {
     
 
     public static void main(String[] args) {
-        mostrarUsers(udao.listarUsuarios());
-        mostrarFuncionarios(fdao.listar_funcionarios());
-        mostrarGerentes(gdao.listar_gerentes());
-        mostrarProdutos(pdao.listar_produtos());
-
-        mostrarFuncionarios(gdao.listar_seus_funcionarios(1));
-        mostrarProdutos(gdao.listar_seus_produtos(1));
-        mostrarFuncionarios(gdao.listar_seus_funcionarios(2));
-        mostrarProdutos(gdao.listar_seus_produtos(2));
+       mostrarProdutos(pdao.listar_produtos());
+       mostrarProdutos(gdao.listar_seus_produtos(1));
     }
 
     public static void mostrarUsers(ArrayList<Usuario> users){

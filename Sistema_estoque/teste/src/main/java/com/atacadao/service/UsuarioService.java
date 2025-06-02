@@ -1,6 +1,10 @@
 package com.atacadao.service;
 
+import com.atacadao.dao.FuncionarioDAO;
+import com.atacadao.dao.GerenteDAO;
 import com.atacadao.dao.UsuarioDAO;
+import com.atacadao.model.Funcionario;
+import com.atacadao.model.Gerente;
 import com.atacadao.model.Usuario;
 
 public class UsuarioService {
@@ -46,5 +50,14 @@ public class UsuarioService {
         u.setCpf(formatarCPF(u.getCpf()));
         u.setCelular(formatarCelular(u.getCelular()));
         return  udao.inserirUsuario(u);
+    }
+
+    //se for um funcionario ou um gerente retorna false se for um usuario sem especialização retorna true
+    public boolean eUsuarioNaoCadastrado(String cpf){
+        cpf = formatarCPF(cpf);
+        Funcionario f = new FuncionarioDAO().buscar_funcionario(cpf);
+        Gerente g = new GerenteDAO().buscar_gerente(cpf);
+        if(f!=null || g!=null) return false;
+        return true;
     }
 }

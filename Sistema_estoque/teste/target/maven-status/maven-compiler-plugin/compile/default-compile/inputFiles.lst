@@ -2,10 +2,10 @@
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/dao/FuncionarioDAO.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/model/Usuario.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/dao/UsuarioDAO.java
+/home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/controller/UsuarioServlet.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/controller/LoginServlet.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/service/FuncionarioService.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/model/Funcionario.java
-/home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/controller/LogoutServlet.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/model/Produto.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/dao/Conexao.java
 /home/jonas/Desktop/Java/Sistema_estoque/teste/src/main/java/com/atacadao/service/UsuarioService.java

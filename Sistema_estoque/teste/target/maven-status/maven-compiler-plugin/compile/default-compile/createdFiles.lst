@@ -2,9 +2,9 @@ com/atacadao/service/GerenteService.class
 com/atacadao/dao/ProdutoDAO.class
 com/atacadao/service/UsuarioService.class
 com/atacadao/dao/Conexao.class
-com/atacadao/controller/LogoutServlet.class
 com/atacadao/model/Funcionario.class
 com/atacadao/model/Usuario.class
+com/atacadao/controller/UsuarioServlet.class
 com/atacadao/controller/GerenteServlet.class
 com/atacadao/service/FuncionarioService.class
 com/atacadao/util/Teste.class

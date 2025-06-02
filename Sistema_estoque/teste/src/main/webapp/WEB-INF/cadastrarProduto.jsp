@@ -7,17 +7,27 @@
     <title>Página de cadastro Produto</title>
 </head>
 <body>
-  <h2>Cadastrar Produtos</h2>
   <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
-  <form method="post" action="">
-    <label for="nome">Nome:     </label>
+  <h2>Cadastrar Produtos</h2>
+
+  <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
+
+  <form method="post" action="${pageContext.request.contextPath}/gerenteServlet">
+    <label for="nome">Nome:       |</label>
     <input id="nome" type="text" name="nome">
-    <label for="quantidade">Quantidade: </label>
+    <br>
+    <label for="quantidade">Quantidade: |</label>
     <input id="quantidade" type="number" name="quantidade">
-    <label for="valor">Valor</label>
-    <input id="valor" name="valor" type="number">
-    <input type="submit" name="op" value="cadastrarProduto">
+    <br>
+    <label for="valor">Valor:      |</label>
+    <input id="valor" name="valor" type="number" step="0.01" value="0.00">
+    <br>
+    <input type="submit" name="acao" value="cadastrarProduto">
   </form>
-  <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
+
+  <c:if test="${not empty msg}">
+    <h3>${msg}</h3>
+  </c:if>
+
 </body>
 </html>

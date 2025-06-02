@@ -110,9 +110,10 @@ public class GerenteDAO {
 
     public ArrayList<Produto> listar_seus_produtos(int id){
         ArrayList<Produto> produtos = new ArrayList<Produto>();
-        String sql = "SELECT * FROM gerente g, produto p " +
+        String sql = "SELECT p.id, p.nome, p.valor, p.quantidade, p.id_gerente " +
+        "FROM gerente g, produto p " +
         "WHERE g.id = p.id_gerente AND " +
-        "g.id = ?";
+        "p.id_gerente = ?";
 
         try (Connection con = Conexao.obterConexao();
                 PreparedStatement stmt = con.prepareStatement(sql)) {

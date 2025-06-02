@@ -17,6 +17,7 @@
     <title>Página do funcionario</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a>
     <h1>Sistema de estoque atacadão (funcionario)</h2>
     <h2>${pageContext.request.contextPath}</h2>
     <h2>Bem vindo, <c:out value="${sessionScope.usuario.nome}"/>!</h1>
@@ -29,7 +30,5 @@
         <li><strong>Celular: </strong> <c:out value="${sessionScope.usuario.celular}"/></li>
         <li><strong>Cargo: </strong> <c:out value="${sessionScope.funcionario.cargo}"/></li>
     </ul>
-    
-    <a href="${pageContext.request.contextPath}/logoutServlet">Sair</a>
 </body>
 </html>
