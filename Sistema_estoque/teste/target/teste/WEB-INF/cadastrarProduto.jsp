@@ -2,6 +2,13 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%
+    if (session.getAttribute("gerente") == null) {
+        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
+        return;
+    }
+%>
+
 <html>
 <head>
     <title>Página de cadastro Produto</title>
@@ -23,6 +30,7 @@
     <input id="valor" name="valor" type="number" step="0.01" value="0.00">
     <br>
     <input type="submit" name="acao" value="cadastrarProduto">
+    
   </form>
 
   <c:if test="${not empty msg}">

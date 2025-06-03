@@ -9,13 +9,25 @@ public class FuncionarioService {
 
     private static FuncionarioDAO fdao = new FuncionarioDAO();
 
-    public Funcionario getFuncionario(String cpf){
+    public static Funcionario getFuncionario(String cpf){
         cpf=UsuarioService.formatarCPF(cpf);
-        Funcionario f = fdao.buscar_funcionario(cpf);
-        return f;
+        return  fdao.buscar_funcionario(cpf);
     }
     
-    public ArrayList<Funcionario> list(){
+    public static ArrayList<Funcionario> list(){
         return fdao.listar_funcionarios();
+    }
+
+    public static boolean cadastrarFuncionario(Funcionario f){
+        boolean sucesso = fdao.inserir_funcionario(f);
+        return sucesso;
+    }
+
+    public static Funcionario buscarFuncionarioId(int id){
+        return fdao.buscarFuncionarioId(id);
+    }
+
+    public static boolean excluirFuncionario(int id){
+        return fdao.remover_funcionario(id);
     }
 }

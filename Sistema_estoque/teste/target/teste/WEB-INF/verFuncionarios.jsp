@@ -18,7 +18,19 @@
 </head>
 <body>
     <h2>Funcionarios cadastrados</h2>
-<!-- taglib choose da core tem a função de servir como um switch case enquanto
+
+    <c:if test="${not empty funcionarioExcluido}">
+        <table>
+            <tr>
+                <td>${funcionarioExcluido.usuario.nome}</td>
+                <td>${funcionarioExcluido.cargo}</td>
+                <td>${funcionarioExcluido.salario}</td>
+            </tr>
+        </table>
+        <p>foi excluído</p>
+    </c:if>
+
+    <!-- taglib choose da core tem a função de servir como um switch case enquanto
     a taglib forEach tem a mesma função de uma estrutura de repetição-->
     <c:choose>
         <c:when test="${empty listaFuncionarios}">
@@ -29,7 +41,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Nome</th>
-                    <th>Email</th
+                    <th>Email</th>
                     <th>Celular</th>
                     <th>Salário</th>
                     <th>Cargo</th>
@@ -44,12 +56,10 @@
                         <td>${f.usuario.salario}</td>
                         <td>${f.cargo}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/gerenteServlet?opcao
-                            =editarFuncionario&&info=${f.id}"> Editar </a>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=editarFuncionario&&info=${f.id}"> Editar </a>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/gerenteServlet?opcao
-                            =removerFuncionario&&info=${f.id}"> Remover </a>
+                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=removerFuncionario&&info=${f.id}"> Remover </a>
                         </td>
                     </tr>
                 </c:forEach>

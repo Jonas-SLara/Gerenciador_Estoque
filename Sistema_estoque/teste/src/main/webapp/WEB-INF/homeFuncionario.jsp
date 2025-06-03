@@ -30,5 +30,30 @@
         <li><strong>Celular: </strong> <c:out value="${sessionScope.usuario.celular}"/></li>
         <li><strong>Cargo: </strong> <c:out value="${sessionScope.funcionario.cargo}"/></li>
     </ul>
+
+    <h3>Produtos da sua seção</h3>
+    <c:choose>
+        <c:when test="${empty listaProdutos}">
+            <p>Nenhum produto cadastrado</p>
+        </c:when>
+        <c:otherwise>
+            <table>
+                <tr>
+                    <th>nome:</th>
+                    <th>quantidade:</th>
+                    <th>valor:</th>
+                    <th>id:</th>
+                </tr>
+                <c:forEach var="p" items="${listaProdutos}">
+                    <tr>
+                        <td>${p.nome}</td>
+                        <td>${p.quantidade}</td>
+                        <td>${p.valor}</td>
+                        <td>${p.id}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>

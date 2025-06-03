@@ -59,6 +59,7 @@ public class FuncionarioDAO {
                 f.setIdGerente(rs.getInt("id_gerente"));
                 f.setCargo(rs.getString("cargo"));
                 f.setId(rs.getInt("id"));
+
                 Usuario u = new Usuario();
                 u.setCelular(rs.getString("celular"));
                 u.setEmail(rs.getString("email"));
@@ -77,24 +78,49 @@ public class FuncionarioDAO {
         return f;
     }
 
-    public boolean inserir_funcionario(Funcionario f){
-        String sql = "INSERT INTO funcionario (cpf_usuario, id_gerente, cargo) VALUES (?, ?, ?)";
-        try (Connection con = Conexao.obterConexao();
-            PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, f.getCpfUsuario());
-            stmt.setInt(2, f.getIdGerente());
-            stmt.setString(3, f.getCargo());
-            stmt.execute();
-            System.out.println("funcionario cadastrado");
+   public boolean inserir_funcionario(Funcionario f) {
+    String sqlInsert = "INSERT INTO funcionario (cpf_usuario, id_gerente, cargo) VALUES (?, ?, ?)";
+    String sqlUpdate = "UPDATE usuario SET salario = ? WHERE cpf = ?";
+
+    try (Connection con = Conexao.obterConexao()) {
+        con.setAutoCommit(false); // Início da transação
+
+        try (
+            PreparedStatement stmtInsert = con.prepareStatement(sqlInsert);
+            PreparedStatement stmtUpdate = con.prepareStatement(sqlUpdate)
+        ) {
+            // Primeiro comando: INSERT
+            stmtInsert.setString(1, f.getCpfUsuario());
+            stmtInsert.setInt(2, f.getIdGerente());
+            stmtInsert.setString(3, f.getCargo());
+            stmtInsert.executeUpdate();
+
+            // Segundo comando: UPDATE
+            stmtUpdate.setDouble(1, f.getUsuario().getSalario());
+            stmtUpdate.setString(2, f.getCpfUsuario());
+            stmtUpdate.executeUpdate();
+
+            con.commit(); // Finaliza a transação
+            System.out.println("Funcionário cadastrado");
+            return true;
+
         } catch (SQLException e) {
-            System.out.println("erro inserir funcionario " + e.getMessage());
-            return false;
-        } catch (IllegalStateException e){
-            System.out.println("Banco de dados não configurado: " + e.getMessage());
+            con.rollback(); // Desfaz as alterações em caso de erro
+            System.out.println("Erro ao inserir funcionário, transação revertida: " + e.getMessage());
             return false;
         }
-        return true;
+
+    } catch (SQLException e) {
+        System.out.println("Erro de conexão ou transação: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    } catch (IllegalStateException e) {
+        System.out.println("Banco de dados não configurado: " + e.getMessage());
+        e.printStackTrace();
+        return false;
     }
+}
+
 
     public boolean remover_funcionario(int id){
         String sql = "DELETE FROM funcionario WHERE id = ?";
@@ -135,5 +161,40 @@ public class FuncionarioDAO {
         }
         return true;
     }
-        
+    
+    public Funcionario buscarFuncionarioId(int id){
+        Funcionario f = null;
+        String sql ="SELECT * FROM funcionario f INNER JOIN usuario u "+
+        "ON u.cpf = f.cpf_usuario AND f.id = ?";
+
+        try (Connection con = Conexao.obterConexao();
+            PreparedStatement stmt = con.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                f = new Funcionario();
+                f.setCpfUsuario(rs.getString("cpf_usuario"));
+                f.setIdGerente(rs.getInt("id_gerente"));
+                f.setCargo(rs.getString("cargo"));
+                f.setId(rs.getInt("id"));
+
+                Usuario u = new Usuario();
+                u.setCelular(rs.getString("celular"));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setSalario(rs.getDouble("salario"));
+                f.setUsuario(u);
+                System.out.println("funcionario encontrado");
+            }else{
+                System.out.println("funcionario não encontrado");
+            }
+        } catch (SQLException e) {
+            System.out.println("erro ao buscar funcionario " + e.getMessage());
+        } catch (IllegalStateException e){
+            System.out.println("Banco de dados não configurado: " + e.getMessage());
+        }
+        return f;
+    }
+    
 }

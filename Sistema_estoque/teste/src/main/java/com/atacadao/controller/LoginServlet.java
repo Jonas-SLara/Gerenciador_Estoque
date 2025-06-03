@@ -5,9 +5,13 @@ import java.io.IOException;
 import com.atacadao.model.Funcionario;
 import com.atacadao.model.Gerente;
 import com.atacadao.model.Usuario;
+import com.atacadao.model.Produto;
+
 import com.atacadao.service.FuncionarioService;
 import com.atacadao.service.GerenteService;
 import com.atacadao.service.UsuarioService;
+import java.util.ArrayList;
+
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -28,6 +32,7 @@ public class LoginServlet extends HttpServlet{
         String senha = resq.getParameter("senha");
         
         UsuarioService uService = new UsuarioService();
+        GerenteService gs = new GerenteService();
         
         if(uService.autenticar(cpf, senha)){
             //login bem sucedido agora valida se é funcionario ou gerente 
@@ -37,19 +42,20 @@ public class LoginServlet extends HttpServlet{
             HttpSession session = resq.getSession();
             session.setAttribute("usuario", u);
 
-            FuncionarioService fs = new FuncionarioService();
-            Funcionario f = fs.getFuncionario(cpf);
-
+           
+            Funcionario f = FuncionarioService.getFuncionario(cpf);
             if(f!=null){
                 //guarda o objeto funcionario em uma seção para ser usado posteriormente
                 session.setAttribute("funcionario", f);
+                
+                //monta a lista de produtos da sua seção
+                ArrayList<Produto> produtos = gs.listProdutos(f.getIdGerente());
+                resq.setAttribute("listaProdutos", produtos);
 
                 RequestDispatcher dispatcher = resq.getRequestDispatcher("/WEB-INF/homeFuncionario.jsp");
                 dispatcher.forward(resq, resp);
                 return;
             }
-
-            GerenteService gs = new GerenteService();
             Gerente g = gs.getGerente(cpf);
 
             if(g!=null){

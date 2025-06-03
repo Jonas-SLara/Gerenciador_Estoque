@@ -5,11 +5,8 @@ import java.util.ArrayList;
 
 import javax.print.DocFlavor.STRING;
 
-import com.atacadao.model.Funcionario;
-import com.atacadao.model.Gerente;
-import com.atacadao.model.Produto;
-import com.atacadao.service.GerenteService;
-import com.atacadao.service.ProdutoService;
+import com.atacadao.model.*;
+import com.atacadao.service.*;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -39,14 +36,14 @@ public class GerenteServlet extends HttpServlet{
 
         Gerente gerente = (Gerente) session.getAttribute("gerente"); 
         String acao = req.getParameter("acao");
-        
+        int id_gerente;
+
         switch (acao) {
             case "cadastrarProduto":
                 String nome = req.getParameter("nome");
                 String valor = req.getParameter("valor");
                 String quantidade = req.getParameter("quantidade");
-                int id_gerente = gerente.getId();
-
+                id_gerente = gerente.getId();
                 //pode gerar erros de conversão ou do banco
                 try {
                     double valorConvertido = Double.parseDouble(valor);
@@ -73,11 +70,33 @@ public class GerenteServlet extends HttpServlet{
                 break;
 
             case "cadastrarFuncionario":
-                String cpf = req.getParameter("cpf");
+                String cpf = req.getParameter("cpf_usuario");
                 String cargo = req.getParameter("cargo");
                 String salario = req.getParameter("salario");
                 Funcionario f = new Funcionario();
-                f.setCargo(cargo);
+                id_gerente = gerente.getId();
+
+                try{
+                    f.setCargo(cargo);
+                    cpf = UsuarioService.formatarCPF(cpf);
+                    f.setCpfUsuario(cpf);
+                    f.setIdGerente(id_gerente);
+                    //buscar o usuario relacionado a este funcionario para inserir novos dados preferenciais
+                    Usuario u = new UsuarioService().buscarUsuario(cpf);
+                    u.setSalario(Double.parseDouble(salario));
+                    //guarda o usuario correspondente no funcionario para ajudar a guardar dados
+                    f.setUsuario(u);
+
+                    boolean sucesso = FuncionarioService.cadastrarFuncionario(f);
+                    String msg = (sucesso) ? "novo funcionario cadastrado " + u.getNome() + " cadastrado"
+                    : "não foi possivel cadastrar este funcionario, notifique o ADM";
+                    req.setAttribute("msg", msg);
+                } catch (Exception e) {
+                    System.out.println("erro: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                req.getRequestDispatcher("/WEB-INF/cadastrarFuncionario.jsp").forward(req, resp);
+
                 break;
 
             case "editarProduto":
@@ -102,16 +121,18 @@ public class GerenteServlet extends HttpServlet{
         String acao = req.getParameter("acao");
         GerenteService gs = new GerenteService();
         ProdutoService ps = new ProdutoService();
+        ArrayList<Funcionario> funcionarios = null;
+        ArrayList<Produto> produtos = null;
 
         switch (acao) {
             case "listarFuncionarios":
-                ArrayList<Funcionario> funcionarios = gs.listFuncionarios(gerente.getId());
+                funcionarios = gs.listFuncionarios(gerente.getId());
                 req.setAttribute("listaFuncionarios", funcionarios);
                 req.getRequestDispatcher("/WEB-INF/verFuncionarios.jsp").forward(req, resp);
                 break;
 
             case "listarProdutos":
-                ArrayList<Produto> produtos = gs.listProdutos(gerente.getId());
+                produtos = gs.listProdutos(gerente.getId());
                 req.setAttribute("listaProdutos", produtos);
                 req.getRequestDispatcher("/WEB-INF/verProdutos.jsp").forward(req, resp);
                 break;
@@ -146,7 +167,25 @@ public class GerenteServlet extends HttpServlet{
                
                 req.getRequestDispatcher("/WEB-INF/verProdutos.jsp").forward(req, resp);
             break;
-            
+
+            case "removerFuncionario":
+                info = req.getParameter("info");
+                try{
+                    int id = Integer.parseInt(info);
+                    Funcionario f = FuncionarioService.buscarFuncionarioId(id);
+                    FuncionarioService.excluirFuncionario(id);
+                    
+                    funcionarios = gs.listFuncionarios(gerente.getId());
+                    req.setAttribute("listaFuncionarios", funcionarios);
+                    req.setAttribute("funcionarioExcluido", f);
+                } catch (Exception e) {
+                    System.out.println("erro: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                
+                req.getRequestDispatcher("/WEB-INF/verFuncionarios.jsp").forward(req, resp);
+            break;
+
             case "voltar":
                 req.getRequestDispatcher("/WEB-INF/homeGerente.jsp").forward(req, resp);
                 break;
