@@ -15,13 +15,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do funcionario</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
 </head>
+
 <body>
-    <a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a>
-    <h1>Sistema de estoque atacadão (funcionario)</h2>
-    <h2>${pageContext.request.contextPath}</h2>
-    <h2>Bem vindo, <c:out value="${sessionScope.usuario.nome}"/>!</h1>
-    <h3>Confira seus dados</h3>
+    <!--Nav bar fixa no top-->
+    <nav class="nav_menu">
+        <ul>
+            <li>
+<a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Home</a>
+            </li>
+            <li class="perfil">
+                Olá <c:out value="${sessionScope.usuario.nome}"/>!
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/usuarioServlet?acao=sair">Sair</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content_layout">
+        <h2 class="title">Página do Funcionário</h2>
+        <table class="table_model">
+            <thead>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Salário Atual</th>
+                <th>Email</th>
+                <th>Celular</th>
+                <th>Cargo</th>
+            </thead>
+            <tbody>
+                <td><c:out value="${sessionScope.usuario.nome}"/></td>
+                <td><c:out value="${sessionScope.usuario.cpf}"/></td>
+                <td><c:out value="${sessionScope.usuario.salario}"/></td>
+                <td><c:out value="${sessionScope.usuario.email}"/></td>
+                <td><c:out value="${sessionScope.usuario.celular}"/></td>
+                <td><c:out value="${sessionScope.funcionario.cargo}"/></td>
+            </tbody>
+        </table>
+    </main>
+  
     <ul>
         <li><strong>Nome: </strong> <c:out value="${sessionScope.usuario.nome}"/> </li>
         <li><strong>CPF: </strong> <c:out value="${sessionScope.usuario.cpf}"/> </li>

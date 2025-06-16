@@ -1,61 +1,185 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
-<%
-    if (session.getAttribute("gerente") == null) {
-        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
-        return;
-    }
-%>
+body{
+    background-color: rgb(230, 230, 250);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
-<html>
-<head>
-    <title>Página de cadastro do funcionário</title>
-</head>
-<body>
-    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
-    <h2>Cadastrar Funcionario</h2>
-    <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.nav_menu {
+    width: 100%;
+    background-color: rgb(133, 0, 0);
+    box-shadow: rgb(133, 0, 0) 2px 2px 10px;
+    position: fixed;
+    top:0;
+    left: 0;
+}
+
+.nav_menu ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 0.5em 1em;
+    list-style: none;
+    min-height: 10vh;
+}
+
+.nav_menu ul li {
+    font-size: 1.2em;
+    color: bisque;
+}
+
+.nav_menu ul li a {
+    text-decoration: none;
+    padding: 0.5em 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
+    color: bisque;
+}
+
+.nav_menu ul li a:hover {
+    background-color: bisque;
+    color: rgb(133, 0, 0);
+}
+
+
+.current_page{
+    font-weight: bold;
+    background-color: rgb(197, 0, 0);
+}
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 50%;
+    padding: 8px;
+    background-color: rgb(220, 100, 0);
+    font-size: 1.2em;
+    border-radius: 20px;
+    box-shadow: white 2px 2px 10px;
+    border: none;
+}
+
+.form > input, label{
+    margin: 8px;
+    background: rgb(230, 230, 250);
+    padding: 8px;
+    border-radius: 10px;
+    color: rgb(10, 10, 50);
+}
+
+.form > input{
+    width: 60%;
+}
+.form > label{
+    width: 30%;
+}
+
+.title{
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    text-shadow: white 2px 2px;
+   
+}
+
+.btn{
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 500;
+    padding: 8px;
+    min-width: 5em;
+    color: white;
+}
+
+#ok{
+    background-color: rgb(50, 200, 50);
+}
+
+#cancel{
+    background-color: rgb(194, 33, 5);
+}
+
+main{
+    padding-top: 15vh; 
+}
+
+.content_layout{
+    margin: auto;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.content_layout > h3 {
+    width: 100%;
+    text-align: center;
+}
+.service{
+    width: 40%;
+    min-height: 150px;
+    background-color: rgb(220,100,0);
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    padding: 8px;
+}
+
+.service > * {
+    padding: 2px;
+    margin: 16px 0px;
+}
+
+.service img{
+    width: 90%;
+    height: 200px;
+    background: white;
+    border-radius: 8px;
+}
     
-    <!--Primeiro vai ter a opção de buscar o usuario pelo cpf para o gerente ver se é
-    este mesmo que deve adicionar-->
-    <h3>1º Passo busque seu usuario pelo cpf e confira os dados dele</h3>
-    <p>o sistema não deixa cadastrar um funcionário já cadastrado</p>
+.table_model{
+  width: 90%;
+  background: white;
+  border-radius: 10px;
+  padding: 6px;
+  border-collapse: collapse;
+  font-weight: 500;
+  color: rgb(20,20,20);  
+}
 
-    <form method="post" action="<%=request.getContextPath()%>/usuarioServlet">
-        <label for="cpf">CPF: </label>
-        <input type="text" name="cpf" id="cpf" required>
-        <input type="submit" name="op" value="buscar">
-    </form>
+tbody tr:nth-child(even){
+    background: rgb(230,230,230);
+}
 
-    <c:if test="${not empty erro}">
-        <h3>${erro}</h3>
-    </c:if>
-    <c:if test="${not empty usuarioEncontrado}">
-        <h3>usuario encontrado: ${usuarioEncontrado.nome}  ${usuarioEncontrado.email}</h3>
-    </c:if>
+td, tr, th{
+    padding: 8px;
+    text-align: center;
+}
 
-    <!--caso não receba nenhum erro ao buscar o usuario prossiga-->
-    <c:if test="${empty erro and not empty usuarioEncontrado}">
-        <h3>2º Passo cadastre o usuario como seu funcionário</h3>
+.table_model th{
+    background: rgb(133,0,0);
+    color: bisque;
+}
 
-        <form action="${pageContext.request.contextPath}/gerenteServlet" method="post">
-            <input id="cpf_usuario" name="cpf_usuario" value="${usuarioEncontrado.cpf}" type="hidden">
-            <br>
-            <label for="cargo">Cargo:</label>
-            <input id="cargo" name="cargo" type="text" required>
-            <br>
-            <label for="salario">Salario:</label>
-            <input id="salario" name="salario" type="number" step="0.01" value="0.00" required>
-            <br>
-            <button type="submit" name="acao" value="cadastrarFuncionario">Cadastrar</button>
-        </form>
-    </c:if>
-
-    <c:if test="${not empty msg}">
-        <h3>${msg}</h3>
-    </c:if>
-
-</body>
-</html>
+.btn_link{
+    padding: 8px;
+    color: rgb(10, 10, 0);
+    border-radius: 8px;
+    font-weight: 500;
+    background: white;
+    border: solid rgb(255, 100, 0) 4px;
+}

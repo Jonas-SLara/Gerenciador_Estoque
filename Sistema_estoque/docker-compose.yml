@@ -9,3 +9,10 @@ services:
       POSTGRES_DB: atacadao
     ports:
       - "5432:5432"
+  wildfly:
+    build: .
+    container_name: wildfly
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./deploy:/opt/wildfly/standalone/deployments/

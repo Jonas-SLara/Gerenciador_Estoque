@@ -8,57 +8,75 @@
         return;
     }
 %>
-
+<!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Página do Gerente</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
   </head>
+
   <body>
-    <a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a>
-    <h1>Sistema de estoque atacadão (Gerente)</h2>
-    <h2>${pageContext.request.contextPath}</h2>
 
-    <h2>Bem vindo, <c:out value="${sessionScope.usuario.nome}"/>!</h1>
-    <h3>Confira seus dados</h3>
-    <ul>
-      <li><strong>Nome: </strong> <c:out value="${sessionScope.gerente.usuario.nome}"/> </li>
-      <li><strong>CPF: </strong> <c:out value="${sessionScope.usuario.cpf}"/> </li>
-      <li><strong>Salario: </strong> <c:out value="${sessionScope.gerente.usuario.salario}"/></li>
-      <li><strong>Email: </strong> <c:out value="${sessionScope.gerente.usuario.email}"/></li>
-      <li><strong>Celular: </strong> <c:out value="${sessionScope.gerente.usuario.celular}"/></li>
-      <li><strong>Bonificação: </strong> <c:out value="${sessionScope.gerente.bonificacao}"/></li>
-    </ul>
-    
-    <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
-    <h3>Gerenciamento dos funcionários</h3>
-      <ul>
-        <li>
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
-            Ver seus Funcionarios
-          </a>
-        </li>
-        <li>
+    <!--nav bar fixa no topo-->
+    <nav class="nav_menu">
+        <ul>
+          <li><a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Home</a></li>
+          <li class="perfil"><c:out value="${sessionScope.usuario.nome}"/>!</li>
+          <li>
+            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
+              Seus Funcionários
+            </a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
+              Seu Estoque
+            </a>
+          </li>
+          <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=sair">Sair</a></li>
+        </ul>
+    </nav>
 
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarFuncionario">
-            Cadastrar novo Funcionario
-          </a>
-        </li>
-      </ul>
+    <main class="content_layout">
+        <h2 class="title">Página do Gerente</h2>
+        
+        <table class="table_model">
+          <caption>Dados Pessoais</caption>
+          <thead>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Salário Atual</th>
+            <th>Email</th>
+            <th>Celular</th>
+            <th>Bonificação Atual</th>
+          </thead>
+          <tbody>
+            <td><c:out value="${sessionScope.gerente.usuario.nome}"/></td>
+            <td><c:out value="${sessionScope.usuario.cpf}"/></td>
+            <td><c:out value="${sessionScope.usuario.salario}"/></td>
+            <td><c:out value="${sessionScope.gerente.usuario.email}"/></td>
+            <td><c:out value="${sessionScope.gerente.usuario.celular}"/></td>
+            <td><c:out value="${sessionScope.gerente.bonificacao}"/></td>
+          </tbody>
+        </table>
 
-      <h3>Gerenciamento de produtos</h3>
-      <ul>
-        <li>
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
-            Ver seus Produtos
+        <div class="service">
+          <h2>Cadastre um novo Funcionário Aqui</h2>
+          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarFuncionario"
+          class="btn_link">
+              Cadastrar Funcionário
           </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarProduto">
+        </div>
+        
+        <div class="service">
+          <h2>Cadastre um novo produto Aqui</h2>
+          <a href="${pageContext.request.contextPath}/gerenteServlet?acao=irCadastrarProduto"
+          class="btn_link">
             Cadastrar Produto
           </a>
-        </li>
-      </ul>
+        </div>
+    </main>
   </body>
 </html>

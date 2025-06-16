@@ -15,9 +15,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do funcionario</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
 </head>
+
 <body>
-    <a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a>
+    <a href="${pageContext.request.contextPath}/usuarioServlet?acao=sair">Sair</a>
     <h1>Sistema de estoque atacadão (funcionario)</h2>
     <h2>${pageContext.request.contextPath}</h2>
     <h2>Bem vindo, <c:out value="${sessionScope.usuario.nome}"/>!</h1>

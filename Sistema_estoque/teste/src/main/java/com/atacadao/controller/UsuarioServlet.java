@@ -39,7 +39,7 @@ public class UsuarioServlet extends HttpServlet {
                 u.setEmail(email);
                 boolean sucesso = us.cadastrarUsuario(u);
                 String msg = (sucesso)?
-                "Cadastrado com sucesso! usuario: " + u.getEmail() + "Comunique com o RH para finalizar"
+                "Cadastrado com sucesso! usuario(a): " + u.getEmail() + "  Comunique com o RH para finalizar"
                 : "erro ao cadastrar usuario tente outro CPF";
 
                 req.setAttribute("msg", msg);
@@ -70,10 +70,26 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest resq, HttpServletResponse resp)
             throws ServletException, IOException{
-        HttpSession session = resq.getSession(false);
-        if(session != null){
-            session.invalidate();
+        String op = resq.getParameter("acao");
+        switch (op) {
+            case "irLogin":
+                resp.sendRedirect(resq.getContextPath() + "/pages/login.jsp");
+                break;
+            case "irCadastro":
+                resp.sendRedirect(resq.getContextPath() + "/pages/cadastro.jsp");
+                break;
+            case "irIndex":
+                resp.sendRedirect(resq.getContextPath() + "/");
+                break;
+            case "sair":
+                HttpSession session = resq.getSession(false);
+                if(session != null){
+                session.invalidate();
+                }
+                resp.sendRedirect(resq.getContextPath() + "/pages/login.jsp");
+                break;
+            default:
+                break;
         }
-        resp.sendRedirect(resq.getContextPath() + "/pages/login.jsp");
     }
 }

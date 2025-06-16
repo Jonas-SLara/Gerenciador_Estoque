@@ -8,22 +8,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
 </head>
 <body>
-    <a href="${pageContext.request.contextPath}/index.jsp">Voltar</a>
-    <h2>Formulário</h2>
 
-    <c:if test = "${not empty erro}">
-        <p style="color : rgb(180, 0, 0);">${erro}</p>
-    </c:if>
+    <nav class="nav_menu">
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irIndex">Atacadão</a></li>
+            <li><a class="current_page" href="#">Login</a></li>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irCadastro">Cadastro</a></li>
+            <li><a href="#">RH</a></li>
+        </ul>
+    </nav>
 
-    <form method="POST" action="<%=request.getContextPath()%>/loginServlet">
-        <label for="cpf">CPF:   </label>
-        <input id="cpf" name="cpf" type="text" placeholder="xxx.xxx.xxx-xx"><br>
-        <label for="senha">Senha: </label>
-        <input id="senha" name="senha" type="password" placeholder="sua senha"><br>
-        <% out.println("todos os campos são obrigatórios"); %>
-        <input type="submit" name="op" value="login"><br>
-    </form>
+    <main class="content_layout">
+        <h2 class="title">Formulário</h2>
+        <c:if test = "${not empty erro}">
+            <p style="color : rgb(180, 0, 0);">${erro}</p>
+        </c:if>
+
+        <form method="POST" action="<%=request.getContextPath()%>/loginServlet" class="form">
+            <label for="cpf">CPF:   </label>
+            <input id="cpf" name="cpf" type="text" placeholder="*" required><br>
+            <label for="senha">Senha: </label>
+            <input id="senha" name="senha" type="password" placeholder="*" required><br>
+            <p style="color: red; font-size: 0.8rem;">todos os campos * são obrigatórios</p>
+            <button class="btn" id="ok" type="submit" name="op" value="login">Login</button>
+        </form>
+    </main>
+
 </body>
 </html>

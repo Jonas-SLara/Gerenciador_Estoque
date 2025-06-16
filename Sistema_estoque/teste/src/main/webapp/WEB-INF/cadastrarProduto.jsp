@@ -11,31 +11,53 @@
 
 <html>
 <head>
-    <title>Página de cadastro Produto</title>
+    <title>Cadastro de Produtos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
 </head>
 <body>
-  <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
-  <h2>Cadastrar Produtos</h2>
 
-  <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
+  <!--nav bar fixa no topo-->
+    <nav class="nav_menu">
+        <ul>
+          <li><a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a></li>
+          <li class="perfil"><c:out value="${sessionScope.usuario.nome}"/>!</li>
+          <li>
+            <a class="current_page" href="#">
+              Cadastro de Produtos
+            </a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
+              Seu Estoque
+            </a>
+          </li>
+          <li><a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a></li>
+        </ul>
+    </nav>
 
-  <form method="post" action="${pageContext.request.contextPath}/gerenteServlet">
-    <label for="nome">Nome:       |</label>
-    <input id="nome" type="text" name="nome">
-    <br>
-    <label for="quantidade">Quantidade: |</label>
-    <input id="quantidade" type="number" name="quantidade">
-    <br>
-    <label for="valor">Valor:      |</label>
-    <input id="valor" name="valor" type="number" step="0.01" value="0.00">
-    <br>
-    <input type="submit" name="acao" value="cadastrarProduto">
-    
-  </form>
+  <main class="content_layout">
+    <h2 class="title">Cadastro de Produtos</h2>
 
-  <c:if test="${not empty msg}">
-    <h3>${msg}</h3>
-  </c:if>
+    <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
+    <form method="post" action="${pageContext.request.contextPath}/gerenteServlet" class="form">
+      <label for="nome">Nome:       |</label>
+      <input id="nome" type="text" name="nome">
+      <br>
+      <label for="quantidade">Quantidade: |</label>
+      <input id="quantidade" type="number" name="quantidade">
+      <br>
+      <label for="valor">Valor:      |</label>
+      <input id="valor" name="valor" type="number" step="0.01" value="0.00">
+      <br>
+      <button type="submit" name="acao" value="cadastrarProduto" class="btn" id="ok">Cadastrar</button>
+    </form>
+
+    <c:if test="${not empty msg}">
+      <h3>${msg}</h3>
+    </c:if>
+  </main>
 
 </body>
 </html>

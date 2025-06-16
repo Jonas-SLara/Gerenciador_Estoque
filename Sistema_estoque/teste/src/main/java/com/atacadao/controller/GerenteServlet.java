@@ -3,12 +3,9 @@ package com.atacadao.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.print.DocFlavor.STRING;
-
 import com.atacadao.model.*;
 import com.atacadao.service.*;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

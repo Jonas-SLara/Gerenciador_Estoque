@@ -31,7 +31,7 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
-    <!-- API do servlet-->
+    <!-- API do servlet já vem implementada no wildfly, por isso o scopo é provided-->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
@@ -45,10 +45,15 @@
       <groupId>jakarta.servlet.jsp.jstl</groupId>
       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
       <version>3.0.0</version>
-      <scope>provided</scope>
+    </dependency>
+    <!--implementação da jstl-->
+    <dependency>
+      <groupId>org.glassfish.web</groupId>
+      <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+      <version>3.0.0</version>  
     </dependency>
 
-    <!-- JSP API (Jakarta) -->
+    <!-- JSP API (Jakarta) já vem implementada no wildfly por isso provided-->
     <dependency>
       <groupId>jakarta.servlet.jsp</groupId>
       <artifactId>jakarta.servlet.jsp-api</artifactId>
@@ -56,7 +61,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- EL API (jakarta)-->
+    <!-- EL API (jakarta) já vem implementada no wildfly por isso provided-->
     <dependency>
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>

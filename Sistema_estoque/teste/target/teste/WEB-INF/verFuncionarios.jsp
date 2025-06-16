@@ -14,31 +14,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Funcionarios</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
+    <title>Seus Funcionários</title>
 </head>
 <body>
-    <h2>Funcionarios cadastrados</h2>
 
-    <c:if test="${not empty funcionarioExcluido}">
-        <table>
-            <tr>
-                <td>${funcionarioExcluido.usuario.nome}</td>
-                <td>${funcionarioExcluido.cargo}</td>
-                <td>${funcionarioExcluido.salario}</td>
-            </tr>
-        </table>
-        <p>foi excluído</p>
-    </c:if>
+    <!--nav bar fixa no topo-->
+     <nav class="nav_menu">
+        <ul>
+          <li><a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a></li>
+          <li class="perfil"><c:out value="${sessionScope.usuario.nome}"/>!</li>
+          <li>
+            <a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
+              Seus Funcionários
+            </a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
+              Seu Estoque
+            </a>
+          </li>
+          <li><a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a></li>
+        </ul>
+    </nav>
 
-    <!-- taglib choose da core tem a função de servir como um switch case enquanto
-    a taglib forEach tem a mesma função de uma estrutura de repetição-->
-    <c:choose>
+    <main class="content_layout">
+        <h2 class="title">Seus Funcionários</h2>
+        <!--recolhe o funcionario que acabou de ser excluído-->
+        <c:if test="${not empty funcionarioExcluido}">
+            <table class="table_model">
+                <caption>Funcionário Deletado!</caption>
+                <thead>
+                    <th>Nome</th>
+                    <th>Cargo</th>
+                    <th>Salário</th>
+                    <th>CPF</th>
+                </thead>
+                <tbody>
+                    <td>${funcionarioExcluido.usuario.nome}</td>
+                    <td>${funcionarioExcluido.cargo}</td>
+                    <td>${funcionarioExcluido.usuario.salario}</td>
+                    <td>${funcionarioExcluido.usuario.cpf}</td>
+                </tbody>
+            </table>
+        </c:if>
+
+<c:choose>
         <c:when test="${empty listaFuncionarios}">
             <p>Nenhum funcionário cadastrado</p>
         </c:when>
         <c:otherwise>
-            <table>
-                <tr>
+            <table class="table_model">
+                <thead>
                     <th>Id</th>
                     <th>Nome</th>
                     <th>Email</th>
@@ -46,7 +73,8 @@
                     <th>Salário</th>
                     <th>Cargo</th>
                     <th>Opção</th>
-                </tr>
+                </thead>
+                <tbody>
                 <c:forEach var="f" items="${listaFuncionarios}">
                     <tr>
                         <td>${f.id}</td>
@@ -56,18 +84,17 @@
                         <td>${f.usuario.salario}</td>
                         <td>${f.cargo}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=editarFuncionario&&info=${f.id}"> Editar </a>
+<a href="${pageContext.request.contextPath}/gerenteServlet?acao=editarFuncionario&&info=${f.id}"> Editar </a>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=removerFuncionario&&info=${f.id}"> Remover </a>
+<a href="${pageContext.request.contextPath}/gerenteServlet?acao=removerFuncionario&&info=${f.id}"> Remover </a>
                         </td>
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
         </c:otherwise>
     </c:choose>
-    <br>
-    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
-
+    </main>
 </body>
 </html>
