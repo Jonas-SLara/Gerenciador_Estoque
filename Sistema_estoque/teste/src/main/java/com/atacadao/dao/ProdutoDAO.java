@@ -63,18 +63,17 @@ public class ProdutoDAO {
     }
 
     public boolean alterar_produto(Produto p){
-        String sql = "UPDATE produto SET nome=?, quantidade=?, valor=?, id_gerente=? WHERE id = ?";
+        String sql = "UPDATE produto SET nome=?, quantidade=?, valor=? WHERE id = ?";
         try (Connection con = Conexao.obterConexao();
             PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, p.getNome());
             stmt.setInt(2, p.getQuantidade());
             stmt.setDouble(3, p.getValor());
-            stmt.setInt(4, p.getIdGerente());
-            stmt.setInt(5, p.getId());
+            stmt.setInt(4, p.getId());
 
             stmt.execute();
         } catch (SQLException e) {
-            System.out.println("erro ao buscar produto: " + e.getMessage());
+            System.out.println("erro ao alterar produto: " + e.getMessage());
             return false;
         } catch (IllegalStateException e){
             System.out.println("Banco de dados não configurado: " + e.getMessage());

@@ -63,6 +63,7 @@ public class GerenteDAO {
                 g.setUsuario(u);
             }else{
                 System.out.println("gerente não encontrado");
+                return g;
             }
         } catch (SQLException e) {
             System.out.println("erro ao buscar gerente: " + e.getMessage());
@@ -70,6 +71,36 @@ public class GerenteDAO {
             System.out.println("banco de dados não configurado: " + e.getMessage());
         }
         System.out.println("gerente buscado com sucesso");
+        return g;
+    }
+
+    public Gerente buscar_gerente_id(int id){
+        String sql = "SELECT * FROM gerente g INNER JOIN usuario u " +
+        "ON g.cpf_usuario = u.cpf AND g.id = ?";
+
+        Gerente g = null;
+        try (Connection con = Conexao.obterConexao();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                //pega apenas os dados nescessários do gerente
+                g=new Gerente();
+                Usuario u = new Usuario();
+                u.setNome(rs.getString("nome"));
+                u.setCelular(rs.getString("celular"));
+                u.setEmail(rs.getString("email"));
+                g.setUsuario(u);
+            }else{
+                System.out.println("gerente não encontrado");
+                return g;
+            }
+        } catch (SQLException e) {
+            System.out.println("erro ao buscar gerente: " + e.getMessage());
+        } catch (IllegalStateException e){
+            System.out.println("banco de dados não configurado: " + e.getMessage());
+        }
+        System.out.println("gerente buscado");
         return g;
     }
     

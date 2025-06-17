@@ -27,14 +27,14 @@ public class UsuarioService {
     }
 
     /*retorna null se o usuario não foi encontrado*/
-    public Usuario buscarUsuario(String cpf){
+    public static Usuario buscarUsuario(String cpf){
         cpf = formatarCPF(cpf);
         Usuario u = udao.buscar_por_cpf(cpf);
         return u;
     }
 
     /*autentica um usuario com suas cadastrais informadas*/
-    public boolean autenticar(String cpf, String senha){
+    public static boolean autenticar(String cpf, String senha){
 
         String cpf_formatado = formatarCPF(cpf);
 
@@ -46,14 +46,14 @@ public class UsuarioService {
         return false;
     }
 
-    public boolean cadastrarUsuario(Usuario u){
+    public static boolean cadastrarUsuario(Usuario u){
         u.setCpf(formatarCPF(u.getCpf()));
         u.setCelular(formatarCelular(u.getCelular()));
         return  udao.inserirUsuario(u);
     }
 
     //se for um funcionario ou um gerente retorna false se for um usuario sem especialização retorna true
-    public boolean eUsuarioNaoCadastrado(String cpf){
+    public static boolean eUsuarioNaoCadastrado(String cpf){
         cpf = formatarCPF(cpf);
         Funcionario f = new FuncionarioDAO().buscar_funcionario(cpf);
         Gerente g = new GerenteDAO().buscar_gerente(cpf);

@@ -125,6 +125,11 @@ main{
     gap: 10px;
 }
 
+.content_layout > h3{
+    width: 100%;
+    text-align: center;
+}
+
 .service{
     width: 40%;
     min-height: 150px;

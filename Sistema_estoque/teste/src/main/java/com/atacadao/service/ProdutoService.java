@@ -8,19 +8,23 @@ import com.atacadao.model.Produto;
 public class ProdutoService {
     public static ProdutoDAO pdao = new ProdutoDAO();
 
-    public ArrayList<Produto> list(){
+    public static ArrayList<Produto> list(){
         return pdao.listar_produtos();
     }
 
-    public boolean cadastrarProduto(Produto p){
+    public static boolean cadastrarProduto(Produto p){
         return pdao.inserir_produto(p);
     }
 
-    public boolean excluirProduto(int id){
+    public static boolean excluirProduto(int id){
         return pdao.remover_produto(id);
     }
 
-    public Produto buscarProduto(int id){
+    public static Produto buscarProduto(int id){
         return pdao.buscar_por_id(id);
+    }
+
+    public static boolean alterarProduto(Produto p){
+        return pdao.alterar_produto(p);
     }
 }

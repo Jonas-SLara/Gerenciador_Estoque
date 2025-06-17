@@ -41,8 +41,9 @@
 
     <main class="content_layout">
         <h2 class="title">Página do Gerente</h2>
-        <h3>Seus dados Pessoais</h3>
+        
         <table class="table_model">
+          <caption>Dados Pessoais</caption>
           <thead>
             <th>Nome</th>
             <th>CPF</th>

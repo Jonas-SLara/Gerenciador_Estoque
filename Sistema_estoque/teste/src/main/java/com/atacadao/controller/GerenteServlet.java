@@ -30,30 +30,28 @@ public class GerenteServlet extends HttpServlet{
             resp.sendRedirect(req.getContextPath() + "/pages/login.jsp");
             return;
         }
-
+        //obter o gerente apartir da sessão existente
         Gerente gerente = (Gerente) session.getAttribute("gerente"); 
         String acao = req.getParameter("acao");
-        int id_gerente;
 
         switch (acao) {
             case "cadastrarProduto":
-                String nome = req.getParameter("nome");
-                String valor = req.getParameter("valor");
-                String quantidade = req.getParameter("quantidade");
-                id_gerente = gerente.getId();
                 //pode gerar erros de conversão ou do banco
                 try {
+                    String nome = req.getParameter("nome");
+                    String valor = req.getParameter("valor");
+                    String quantidade = req.getParameter("quantidade");
                     double valorConvertido = Double.parseDouble(valor);
                     int quantidadeConvertida = Integer.parseInt(quantidade);
 
                     Produto p = new Produto();
 
-                    p.setIdGerente(id_gerente);
+                    p.setIdGerente(gerente.getId());
                     p.setNome(nome);
                     p.setValor(valorConvertido);
                     p.setQuantidade(quantidadeConvertida);
 
-                    boolean sucesso = new ProdutoService().cadastrarProduto(p);
+                    boolean sucesso = ProdutoService.cadastrarProduto(p);
                     String msg = (sucesso)?
                     "novo produto " + p.getNome() + " cadastrado "
                     : "erro ao cadastrar produto, notifique o ADM";
@@ -67,21 +65,19 @@ public class GerenteServlet extends HttpServlet{
                 break;
 
             case "cadastrarFuncionario":
-                String cpf = req.getParameter("cpf_usuario");
-                String cargo = req.getParameter("cargo");
-                String salario = req.getParameter("salario");
-                Funcionario f = new Funcionario();
-                id_gerente = gerente.getId();
-
                 try{
+                    String cpf = req.getParameter("cpf_usuario");
+                    String cargo = req.getParameter("cargo");
+                    String salario = req.getParameter("salario");
+                    Funcionario f = new Funcionario();
                     f.setCargo(cargo);
                     cpf = UsuarioService.formatarCPF(cpf);
                     f.setCpfUsuario(cpf);
-                    f.setIdGerente(id_gerente);
+                    f.setIdGerente(gerente.getId());
+
                     //buscar o usuario relacionado a este funcionario para inserir novos dados preferenciais
-                    Usuario u = new UsuarioService().buscarUsuario(cpf);
+                    Usuario u = UsuarioService.buscarUsuario(cpf);
                     u.setSalario(Double.parseDouble(salario));
-                    //guarda o usuario correspondente no funcionario para ajudar a guardar dados
                     f.setUsuario(u);
 
                     boolean sucesso = FuncionarioService.cadastrarFuncionario(f);
@@ -96,10 +92,53 @@ public class GerenteServlet extends HttpServlet{
 
                 break;
 
-            case "editarProduto":
+            case "alterarProduto":
+                try {
+                    Produto p = new Produto();
+                    p.setNome(req.getParameter("nome"));
+                    p.setQuantidade(Integer.parseInt(req.getParameter("quantidade")));
+                    p.setValor(Double.parseDouble(req.getParameter("valor")));
+                    p.setId(Integer.parseInt(req.getParameter("id")));
+
+                    boolean sucesso = ProdutoService.alterarProduto(p);
+                    String msg_edit = (sucesso)? "alterações salvas" : "não foi possível editar";
+                    req.setAttribute("msg_edit", msg_edit);
+
+                    //OBTER A LISTA DE PRODUTOS ATUALIZADA DO GERENTE
+                    ArrayList<Produto> listaProdutos = GerenteService.listProdutos(gerente.getId());
+                    req.setAttribute("listaProdutos", listaProdutos);
+
+                } catch (Exception e) {
+                    System.out.println("erro: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                req.getRequestDispatcher("/WEB-INF/verProdutos.jsp").forward(req, resp);
                 break;
 
-            case "editarFuncionario":
+            case "alterarFuncionario":
+                try {
+                    int id = Integer.parseInt(req.getParameter("id"));
+                    Funcionario f = FuncionarioService.buscarFuncionarioId(id);
+
+                    String novo_cargo = req.getParameter("cargo");
+                    Double novo_salario = Double.parseDouble(req.getParameter("salario"));
+
+                    f.setCargo(novo_cargo);
+                    f.getUsuario().setSalario(novo_salario);
+
+                    boolean sucesso = FuncionarioService.editarFuncionario(f);
+                    String msg_edit = (sucesso)? "alterações salvas" : "não foi possível editar";
+                    req.setAttribute("msg_edit", msg_edit);
+
+                    //OBTER A LISTA DE FUNCIONARIOS NOVAMENTE
+                    ArrayList <Funcionario> listFuncionarios = GerenteService.listFuncionarios(gerente.getId());
+                    req.setAttribute("listaFuncionarios", listFuncionarios);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                req.getRequestDispatcher("/WEB-INF/verFuncionarios.jsp").forward(req, resp);
                 break;
         }
     }
@@ -116,20 +155,19 @@ public class GerenteServlet extends HttpServlet{
 
         Gerente gerente = (Gerente) session.getAttribute("gerente"); 
         String acao = req.getParameter("acao");
-        GerenteService gs = new GerenteService();
-        ProdutoService ps = new ProdutoService();
         ArrayList<Funcionario> funcionarios = null;
         ArrayList<Produto> produtos = null;
+        String info;
 
         switch (acao) {
             case "listarFuncionarios":
-                funcionarios = gs.listFuncionarios(gerente.getId());
+                funcionarios = GerenteService.listFuncionarios(gerente.getId());
                 req.setAttribute("listaFuncionarios", funcionarios);
                 req.getRequestDispatcher("/WEB-INF/verFuncionarios.jsp").forward(req, resp);
                 break;
 
             case "listarProdutos":
-                produtos = gs.listProdutos(gerente.getId());
+                produtos = GerenteService.listProdutos(gerente.getId());
                 req.setAttribute("listaProdutos", produtos);
                 req.getRequestDispatcher("/WEB-INF/verProdutos.jsp").forward(req, resp);
                 break;
@@ -143,15 +181,15 @@ public class GerenteServlet extends HttpServlet{
             break;
 
             case "excluirProduto":
-                String info = req.getParameter("info");
+                info = req.getParameter("info");
                 try {
                     int id = Integer.parseInt(info);
                     //obter o produto para consulta e excluir
-                    Produto p = ps.buscarProduto(id);
-                    ps.excluirProduto(id);
+                    Produto p = ProdutoService.buscarProduto(id);
+                    ProdutoService.excluirProduto(id);
 
                     //precisa obter a nova lista de produtos atualizada
-                    produtos = gs.listProdutos(gerente.getId());
+                    produtos = GerenteService.listProdutos(gerente.getId());
 
                     //envia os dados para a página de volta
                     req.setAttribute("listaProdutos", produtos);
@@ -172,7 +210,7 @@ public class GerenteServlet extends HttpServlet{
                     Funcionario f = FuncionarioService.buscarFuncionarioId(id);
                     FuncionarioService.excluirFuncionario(id);
                     
-                    funcionarios = gs.listFuncionarios(gerente.getId());
+                    funcionarios = GerenteService.listFuncionarios(gerente.getId());
                     req.setAttribute("listaFuncionarios", funcionarios);
                     req.setAttribute("funcionarioExcluido", f);
                 } catch (Exception e) {
@@ -185,6 +223,32 @@ public class GerenteServlet extends HttpServlet{
 
             case "voltar":
                 req.getRequestDispatcher("/WEB-INF/homeGerente.jsp").forward(req, resp);
+                break;
+            
+            case "editarProduto":
+                info = req.getParameter("info");
+                //ache o produto pelo id passado no info e envie na requisição
+                try{
+                    Produto p = ProdutoService.buscarProduto(Integer.parseInt(info));
+                    req.setAttribute("p_edit", p);
+                } catch(Exception e){
+                    System.out.println("erro " + e.getMessage());
+                    e.printStackTrace();
+                }
+                req.getRequestDispatcher("/WEB-INF/editarProduto.jsp").forward(req, resp);
+                break;
+
+            case "editarFuncionario":
+                info = req.getParameter("info");
+                //ache o funcionaro pelo id passado no info e envie na requisição
+                try{
+                    Funcionario f = FuncionarioService.buscarFuncionarioId(Integer.parseInt(info));
+                    req.setAttribute("f_edit", f);
+                } catch(Exception e){
+                    System.out.println("erro " + e.getMessage());
+                    e.printStackTrace();
+                }
+                req.getRequestDispatcher("/WEB-INF/editarFuncionario.jsp").forward(req, resp);
                 break;
 
             default:

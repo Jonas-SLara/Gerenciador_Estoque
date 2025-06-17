@@ -30,4 +30,8 @@ public class FuncionarioService {
     public static boolean excluirFuncionario(int id){
         return fdao.remover_funcionario(id);
     }
+
+    public static boolean editarFuncionario(Funcionario f){
+        return fdao.alterar_funcionario(f);
+    }
 }

@@ -59,42 +59,46 @@
             </table>
         </c:if>
 
-<c:choose>
-        <c:when test="${empty listaFuncionarios}">
-            <p>Nenhum funcionário cadastrado</p>
-        </c:when>
-        <c:otherwise>
-            <table class="table_model">
-                <thead>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Celular</th>
-                    <th>Salário</th>
-                    <th>Cargo</th>
-                    <th>Opção</th>
-                </thead>
-                <tbody>
-                <c:forEach var="f" items="${listaFuncionarios}">
-                    <tr>
-                        <td>${f.id}</td>
-                        <td>${f.usuario.nome}</td>
-                        <td>${f.usuario.email}</td>
-                        <td>${f.usuario.celular}</td>
-                        <td>${f.usuario.salario}</td>
-                        <td>${f.cargo}</td>
-                        <td>
-<a href="${pageContext.request.contextPath}/gerenteServlet?acao=editarFuncionario&&info=${f.id}"> Editar </a>
-                        </td>
-                        <td>
-<a href="${pageContext.request.contextPath}/gerenteServlet?acao=removerFuncionario&&info=${f.id}"> Remover </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
+        <c:if test="${not empty msg_edit}">
+            <h3 style="color: rgb(71, 141, 71);">${msg_edit}</h3>
+        </c:if>
+        <c:choose>
+            <c:when test="${empty listaFuncionarios}">
+                <p>Nenhum funcionário cadastrado</p>
+            </c:when>
+            <c:otherwise>
+                <table class="table_model">
+                    <thead>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Salário</th>
+                        <th>Cargo</th>
+                        <th>Edit</th>
+                        <th>Delet</th>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="f" items="${listaFuncionarios}">
+                        <tr>
+                            <td>${f.id}</td>
+                            <td>${f.usuario.nome}</td>
+                            <td>${f.usuario.email}</td>
+                            <td>${f.usuario.celular}</td>
+                            <td>${f.usuario.salario}</td>
+                            <td>${f.cargo}</td>
+                            <td>
+    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=editarFuncionario&&info=${f.id}"> Editar </a>
+                            </td>
+                            <td>
+    <a href="${pageContext.request.contextPath}/gerenteServlet?acao=removerFuncionario&&info=${f.id}"> Remover </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
     </main>
 </body>
 </html>

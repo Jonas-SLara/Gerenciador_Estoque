@@ -3,7 +3,6 @@ package com.atacadao.controller;
 import com.atacadao.model.Usuario;
 import com.atacadao.service.UsuarioService;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +19,6 @@ public class UsuarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         String op = req.getParameter("op");
-        UsuarioService us = new UsuarioService();
         String nome, senha, cpf, celular, email;
         Usuario u = new Usuario();
 
@@ -37,7 +35,7 @@ public class UsuarioServlet extends HttpServlet {
                 u.setCpf(cpf);
                 u.setCelular(celular);
                 u.setEmail(email);
-                boolean sucesso = us.cadastrarUsuario(u);
+                boolean sucesso = UsuarioService.cadastrarUsuario(u);
                 String msg = (sucesso)?
                 "Cadastrado com sucesso! usuario(a): " + u.getEmail() + "  Comunique com o RH para finalizar"
                 : "erro ao cadastrar usuario tente outro CPF";
@@ -48,11 +46,11 @@ public class UsuarioServlet extends HttpServlet {
 
             case "buscar":
                 cpf = req.getParameter("cpf");
-                u = us.buscarUsuario(cpf);
+                u = UsuarioService.buscarUsuario(cpf);
                 if(u!=null){
                     req.setAttribute("usuarioEncontrado", u);
                     //agora ele verifica se é um funcionario ou gerente
-                    boolean livre = us.eUsuarioNaoCadastrado(cpf);
+                    boolean livre = UsuarioService.eUsuarioNaoCadastrado(cpf);
                     if(!livre){
                         req.setAttribute("erro", "este usuário já tem um vínculo no sistema");
                     }

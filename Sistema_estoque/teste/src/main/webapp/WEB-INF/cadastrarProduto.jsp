@@ -42,14 +42,14 @@
 
     <!--Servlet gerenteServlet recebe o parametro 'acao' para saber qual ação fazer-->
     <form method="post" action="${pageContext.request.contextPath}/gerenteServlet" class="form">
-      <label for="nome">Nome:       |</label>
-      <input id="nome" type="text" name="nome">
+      <label for="nome">Nome:</label>
+      <input id="nome" type="text" name="nome" required>
       <br>
-      <label for="quantidade">Quantidade: |</label>
-      <input id="quantidade" type="number" name="quantidade">
+      <label for="quantidade">Quantidade:</label>
+      <input id="quantidade" type="number" name="quantidade" required>
       <br>
-      <label for="valor">Valor:      |</label>
-      <input id="valor" name="valor" type="number" step="0.01" value="0.00">
+      <label for="valor">Valor:</label>
+      <input id="valor" name="valor" type="number" step="0.01" required>
       <br>
       <button type="submit" name="acao" value="cadastrarProduto" class="btn" id="ok">Cadastrar</button>
     </form>

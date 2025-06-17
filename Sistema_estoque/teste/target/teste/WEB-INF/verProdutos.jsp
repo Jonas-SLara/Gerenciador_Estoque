@@ -67,6 +67,10 @@
         </table>
         </c:if>
 
+        <c:if test="${not empty msg_edit}">
+            <h3 style="color: rgb(71, 141, 71);">${msg_edit}</h3>
+        </c:if>
+
         <!--tabela de produtos cadastrados-->
         <c:choose>
         <c:when test="${empty listaProdutos}">
@@ -79,7 +83,8 @@
                     <th>quantidade:</th>
                     <th>valor:</th>
                     <th>id:</th>
-                    <th>ação:</th>
+                    <th>Edit</th>
+                    <th>Delet</th>
                 </thead>
                 <tbody>
                 <c:forEach var="p" items="${listaProdutos}">

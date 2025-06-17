@@ -121,7 +121,6 @@ public class FuncionarioDAO {
     }
 }
 
-
     public boolean remover_funcionario(int id){
         String sql = "DELETE FROM funcionario WHERE id = ?";
         try (Connection con = Conexao.obterConexao();
@@ -144,22 +143,39 @@ public class FuncionarioDAO {
     }
 
     public boolean alterar_funcionario(Funcionario f){
-        String sql = "UPDATE funcionario SET cargo = ?, id_gerente = ? WHERE id = ?";
-        try (Connection con = Conexao.obterConexao();
-            PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, f.getCargo());
-            stmt.setInt(2, f.getIdGerente());
-            stmt.setInt(3, f.getId());
-            stmt.execute();
-            System.out.println("dados do funcionario alterados");
+        String sqlUpdateFunc = "UPDATE funcionario SET cargo = ?, id_gerente = ? WHERE id = ?";
+        String sqlUpdateUser = "UPDATE usuario SET salario = ? WHERE cpf = ?";
+
+        try (Connection con = Conexao.obterConexao()) {
+            try{
+                con.setAutoCommit(false); //inicio da transação
+
+                PreparedStatement stmt1 = con.prepareStatement(sqlUpdateFunc);
+                stmt1.setString(1, f.getCargo());
+                stmt1.setInt(2, f.getIdGerente());
+                stmt1.setInt(3, f.getId());
+                stmt1.executeUpdate();
+
+                PreparedStatement stmt2 = con.prepareStatement(sqlUpdateUser);
+                stmt2.setDouble(1, f.getUsuario().getSalario());
+                stmt2.setString(2, f.getCpfUsuario());            
+                stmt2.executeUpdate();
+
+                con.commit(); //fim da transação
+                System.out.println("dados do funcionario alterados");
+                return true;
+            }catch(SQLException e){
+                con.rollback(); //desfaz
+                System.out.println("erro ao alterar funcionario " + e.getMessage());
+                e.printStackTrace();
+            }
         } catch (SQLException e) {
             System.out.println("erro ao alterar funcionario " + e.getMessage());
-            return false;
+
         } catch (IllegalStateException e){
             System.out.println("Banco de dados não configurado: " + e.getMessage());
-            return false;
         }
-        return true;
+        return false;
     }
     
     public Funcionario buscarFuncionarioId(int id){
@@ -184,6 +200,7 @@ public class FuncionarioDAO {
                 u.setEmail(rs.getString("email"));
                 u.setNome(rs.getString("nome"));
                 u.setSalario(rs.getDouble("salario"));
+                u.setCpf("cpf");
                 f.setUsuario(u);
                 System.out.println("funcionario encontrado");
             }else{

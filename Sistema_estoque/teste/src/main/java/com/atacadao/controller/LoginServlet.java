@@ -31,33 +31,33 @@ public class LoginServlet extends HttpServlet{
         String cpf = resq.getParameter("cpf");
         String senha = resq.getParameter("senha");
         
-        UsuarioService uService = new UsuarioService();
-        GerenteService gs = new GerenteService();
-        
-        if(uService.autenticar(cpf, senha)){
+        if(UsuarioService.autenticar(cpf, senha)){
             //login bem sucedido agora valida se é funcionario ou gerente 
-            Usuario u = uService.buscarUsuario(cpf);
+            Usuario u = UsuarioService.buscarUsuario(cpf);
 
             //primeiro guarda o objeto usuario em uma session
             HttpSession session = resq.getSession();
             session.setAttribute("usuario", u);
-
            
             Funcionario f = FuncionarioService.getFuncionario(cpf);
             if(f!=null){
                 //guarda o objeto funcionario em uma seção para ser usado posteriormente
                 session.setAttribute("funcionario", f);
                 
+                /* aqui devemos quardar dados do nome e do contato do gerente do funcionario*/
+                Gerente gfUsuario = GerenteService.getGerenteById(f.getIdGerente());
+                session.setAttribute("ger_funcionario", gfUsuario);
+                
                 //monta a lista de produtos da sua seção
-                ArrayList<Produto> produtos = gs.listProdutos(f.getIdGerente());
+                ArrayList<Produto> produtos = GerenteService.listProdutos(f.getIdGerente());
                 resq.setAttribute("listaProdutos", produtos);
 
                 RequestDispatcher dispatcher = resq.getRequestDispatcher("/WEB-INF/homeFuncionario.jsp");
                 dispatcher.forward(resq, resp);
                 return;
             }
-            Gerente g = gs.getGerente(cpf);
 
+            Gerente g = GerenteService.getGerente(cpf);
             if(g!=null){
                 //guarda o objeto gerente em uma seção para ser usado posteriormente
                 session.setAttribute("gerente", g);

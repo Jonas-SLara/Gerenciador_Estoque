@@ -11,21 +11,25 @@ public class GerenteService {
 
     private static GerenteDAO gdao = new GerenteDAO();
 
-    public Gerente getGerente(String cpf){
+    public static Gerente getGerente(String cpf){
         cpf = UsuarioService.formatarCPF(cpf);
         Gerente g = gdao.buscar_gerente(cpf);
         return g;
     }
 
-    public ArrayList<Gerente> list(){
+    public static Gerente getGerenteById(int id){
+        return gdao.buscar_gerente_id(id);
+    }
+
+    public static ArrayList<Gerente> list(){
         return gdao.listar_gerentes();
     }
 
-    public ArrayList<Funcionario> listFuncionarios(int id){
+    public static ArrayList<Funcionario> listFuncionarios(int id){
         return gdao.listar_seus_funcionarios(id);
     }
 
-    public ArrayList<Produto> listProdutos(int id){
+    public static ArrayList<Produto> listProdutos(int id){
         return gdao.listar_seus_produtos(id);
     }
 }

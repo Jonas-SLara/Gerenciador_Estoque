@@ -23,7 +23,7 @@
     <nav class="nav_menu">
         <ul>
             <li>
-<a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Home</a>
+                <a class="current_page" href="#">Home</a>
             </li>
             <li class="perfil">
                 Olá <c:out value="${sessionScope.usuario.nome}"/>!
@@ -34,9 +34,19 @@
         </ul>
     </nav>
 
+    
     <main class="content_layout">
+        <p style="text-align: right; width: 100%; color:rgb(20,20,20); padding: 2px;">
+            <span style="background-color: white;">contate seu gerente: </span>
+            <span style="background-color: bisque;">
+                ${sessionScope.ger_funcionario.usuario.nome} 
+                ${sessionScope.ger_funcionario.usuario.email}
+                ${sessionScope.ger_funcionario.usuario.celular}
+            </span>
+        </p>
         <h2 class="title">Página do Funcionário</h2>
         <table class="table_model">
+            <caption>Dados Pessoais</caption>
             <thead>
                 <th>Nome</th>
                 <th>CPF</th>
@@ -54,30 +64,23 @@
                 <td><c:out value="${sessionScope.funcionario.cargo}"/></td>
             </tbody>
         </table>
-    </main>
-  
-    <ul>
-        <li><strong>Nome: </strong> <c:out value="${sessionScope.usuario.nome}"/> </li>
-        <li><strong>CPF: </strong> <c:out value="${sessionScope.usuario.cpf}"/> </li>
-        <li><strong>Salario: </strong> <c:out value="${sessionScope.usuario.salario}"/></li>
-        <li><strong>Email: </strong> <c:out value="${sessionScope.usuario.email}"/></li>
-        <li><strong>Celular: </strong> <c:out value="${sessionScope.usuario.celular}"/></li>
-        <li><strong>Cargo: </strong> <c:out value="${sessionScope.funcionario.cargo}"/></li>
-    </ul>
 
-    <h3>Produtos da sua seção</h3>
-    <c:choose>
+        <h3>Produtos da sua seção</h3>
+
+        <!--tabela de produtos que o funcionário pode ver de seu gerente-->
+        <c:choose>
         <c:when test="${empty listaProdutos}">
-            <p>Nenhum produto cadastrado</p>
+            <h3>Nenhum produto cadastrado</h3>
         </c:when>
         <c:otherwise>
-            <table>
-                <tr>
+            <table class="table_model">
+                <thead>
                     <th>nome:</th>
                     <th>quantidade:</th>
                     <th>valor:</th>
                     <th>id:</th>
-                </tr>
+                </thead>
+                <tbody>
                 <c:forEach var="p" items="${listaProdutos}">
                     <tr>
                         <td>${p.nome}</td>
@@ -86,8 +89,11 @@
                         <td>${p.id}</td>
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
         </c:otherwise>
-    </c:choose>
+        </c:choose>
+
+    </main>
 </body>
 </html>
