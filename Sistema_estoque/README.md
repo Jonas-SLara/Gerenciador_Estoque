@@ -1,7 +1,7 @@
 ------------------------
 VISÃO GERAL DO PROJETO
 -----------------------
-![CasosDesUso](Diagramas/casosDeUso.png)
+![CasosDesUso](Diagramas/CasosDeUso.drawio.png)
 
 ------------------------
 COMO USAR ESTE PROJETO
