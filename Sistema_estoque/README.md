@@ -1,4 +1,9 @@
 ------------------------
+VISÃO GERAL DO PROJETO
+-----------------------
+![CasosDesUso](Diagramas/casosDeUso.png)
+
+------------------------
 COMO USAR ESTE PROJETO
 ------------------------
 
