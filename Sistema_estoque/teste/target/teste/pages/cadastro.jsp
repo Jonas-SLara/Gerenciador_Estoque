@@ -19,7 +19,7 @@
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irIndex">Atacadão</a></li>
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irLogin">Login</a></li>
             <li><a class="current_page" href="#">Cadastro</a></li>
-            <li><a href="#">RH</a></li>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irLoginADM">ADM</a></li>
         </ul>
     </nav>
 
@@ -37,7 +37,7 @@
             <input id="senha" name="senha" type="password" placeholder="*" required><br>
             <label for="cpf">CPF:    </label>
             <input id="cpf" name="cpf" type="text" placeholder="*" required><br>
-            <p style="color: red; font-size: 0.8rem;">todos os campos * são obrigatórios</p>
+            <p style="color: rgb(255, 255, 255); font-size: 0.8rem;">todos os campos * são obrigatórios</p>
 
             <button class="btn" id="ok" type="submit" value="cadastrar" name="op">Cadastre-se</button>
             <button class="btn" id="cancel" type="reset">Reset</button>

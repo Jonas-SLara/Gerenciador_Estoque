@@ -60,4 +60,8 @@ public class UsuarioService {
         if(f!=null || g!=null) return false;
         return true;
     }
+
+    public static boolean alterarUsuario(Usuario u){
+        return  udao.alterarUsuario(u);
+    }
 }

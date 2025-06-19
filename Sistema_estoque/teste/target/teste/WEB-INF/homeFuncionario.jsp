@@ -26,7 +26,9 @@
                 <a class="current_page" href="#">Home</a>
             </li>
             <li class="perfil">
-                Olá <c:out value="${sessionScope.usuario.nome}"/>!
+                <a href="${pageContext.request.contextPath}/usuarioServlet?acao=verPerfil">
+                    <c:out value="${sessionScope.usuario.nome}"/>!
+                </a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/usuarioServlet?acao=sair">Sair</a>

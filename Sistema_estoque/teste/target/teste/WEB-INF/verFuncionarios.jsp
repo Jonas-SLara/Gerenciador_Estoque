@@ -22,19 +22,25 @@
     <!--nav bar fixa no topo-->
      <nav class="nav_menu">
         <ul>
-          <li><a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a></li>
-          <li class="perfil"><c:out value="${sessionScope.usuario.nome}"/>!</li>
-          <li>
-            <a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
-              Seus Funcionários
-            </a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
-              Seu Estoque
-            </a>
-          </li>
-          <li><a href="${pageContext.request.contextPath}/usuarioServlet">Sair</a></li>
+            <li>
+                <a href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Voltar</a>
+            </li>
+            <li class="perfil">
+                <a href="${pageContext.request.contextPath}/usuarioServlet?acao=verPerfil">
+                    <c:out value="${sessionScope.usuario.nome}"/>!
+                </a>
+            </li>
+            <li>
+                <a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
+                Seus Funcionários
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarProdutos">
+                Seu Estoque
+                </a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=sair">Sair</a></li>
         </ul>
     </nav>
 

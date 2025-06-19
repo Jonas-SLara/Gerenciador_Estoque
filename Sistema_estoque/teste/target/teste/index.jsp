@@ -17,7 +17,7 @@
             <li><a class="current_page" href="#">Atacadão</a></li>
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irLogin">Login</a></li>
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irCadastro">Cadastro</a></li>
-            <li><a href="#">RH</a></li>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irLoginADM">ADM</a></li>
         </ul>
     </nav>
 

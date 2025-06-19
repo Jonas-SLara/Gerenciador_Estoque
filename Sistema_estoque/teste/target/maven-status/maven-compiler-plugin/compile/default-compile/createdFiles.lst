@@ -1,7 +1,10 @@
+com/atacadao/controller/FuncionarioServlet.class
 com/atacadao/service/GerenteService.class
 com/atacadao/dao/ProdutoDAO.class
 com/atacadao/service/UsuarioService.class
 com/atacadao/dao/Conexao.class
+com/atacadao/service/AdminService.class
+com/atacadao/model/Admin.class
 com/atacadao/model/Funcionario.class
 com/atacadao/model/Usuario.class
 com/atacadao/controller/UsuarioServlet.class
@@ -15,3 +18,4 @@ com/atacadao/model/Produto.class
 com/atacadao/service/ProdutoService.class
 com/atacadao/model/Gerente.class
 com/atacadao/dao/GerenteDAO.class
+com/atacadao/dao/AdminDAO.class

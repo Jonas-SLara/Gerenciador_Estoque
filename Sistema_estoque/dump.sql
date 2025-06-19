@@ -22,6 +22,44 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: admin; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.admin (
+    id integer NOT NULL,
+    cnpj character(14) NOT NULL,
+    nome character varying(100) NOT NULL,
+    email character varying(100) NOT NULL,
+    telefone character varying(20),
+    senha character varying(60) NOT NULL
+);
+
+
+ALTER TABLE public.admin OWNER TO postgres;
+
+--
+-- Name: admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.admin_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.admin_id_seq OWNER TO postgres;
+
+--
+-- Name: admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.admin_id_seq OWNED BY public.admin.id;
+
+
+--
 -- Name: funcionario; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -146,6 +184,13 @@ CREATE TABLE public.usuario (
 ALTER TABLE public.usuario OWNER TO postgres;
 
 --
+-- Name: admin id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin ALTER COLUMN id SET DEFAULT nextval('public.admin_id_seq'::regclass);
+
+
+--
 -- Name: funcionario id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -164,6 +209,15 @@ ALTER TABLE ONLY public.gerente ALTER COLUMN id SET DEFAULT nextval('public.gere
 --
 
 ALTER TABLE ONLY public.produto ALTER COLUMN id SET DEFAULT nextval('public.produto_id_seq'::regclass);
+
+
+--
+-- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.admin (id, cnpj, nome, email, telefone, senha) FROM stdin;
+1	12345678000199	Admin Master ATAC	admin@atac.com	11999990000	admin1234
+\.
 
 
 --
@@ -211,6 +265,13 @@ COPY public.usuario (cpf, nome, email, senha, celular, salario) FROM stdin;
 
 
 --
+-- Name: admin_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.admin_id_seq', 1, true);
+
+
+--
 -- Name: funcionario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -229,6 +290,30 @@ SELECT pg_catalog.setval('public.gerente_id_seq', 2, true);
 --
 
 SELECT pg_catalog.setval('public.produto_id_seq', 4, true);
+
+
+--
+-- Name: admin admin_cnpj_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin
+    ADD CONSTRAINT admin_cnpj_key UNIQUE (cnpj);
+
+
+--
+-- Name: admin admin_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin
+    ADD CONSTRAINT admin_email_key UNIQUE (email);
+
+
+--
+-- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin
+    ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
 
 
 --

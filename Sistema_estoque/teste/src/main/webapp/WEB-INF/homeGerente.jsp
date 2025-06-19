@@ -24,7 +24,11 @@
     <nav class="nav_menu">
         <ul>
           <li><a class="current_page" href="${pageContext.request.contextPath}/gerenteServlet?acao=voltar">Home</a></li>
-          <li class="perfil"><c:out value="${sessionScope.usuario.nome}"/>!</li>
+          <li class="perfil">
+            <a href="${pageContext.request.contextPath}/usuarioServlet?acao=verPerfil">
+              <c:out value="${sessionScope.usuario.nome}"/>!
+            </a>
+          </li>
           <li>
             <a href="${pageContext.request.contextPath}/gerenteServlet?acao=listarFuncionarios">
               Seus Funcionários

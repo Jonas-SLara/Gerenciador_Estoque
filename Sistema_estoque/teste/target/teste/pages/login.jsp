@@ -17,12 +17,12 @@
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irIndex">Atacadão</a></li>
             <li><a class="current_page" href="#">Login</a></li>
             <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irCadastro">Cadastro</a></li>
-            <li><a href="#">RH</a></li>
+            <li><a href="${pageContext.request.contextPath}/usuarioServlet?acao=irLoginADM">ADM</a></li>
         </ul>
     </nav>
 
     <main class="content_layout">
-        <h2 class="title">Formulário</h2>
+        <h2 class="title">Login do Usuario</h2>
         <c:if test = "${not empty erro}">
             <p style="color : rgb(180, 0, 0);">${erro}</p>
         </c:if>
@@ -32,7 +32,7 @@
             <input id="cpf" name="cpf" type="text" placeholder="*" required><br>
             <label for="senha">Senha: </label>
             <input id="senha" name="senha" type="password" placeholder="*" required><br>
-            <p style="color: red; font-size: 0.8rem;">todos os campos * são obrigatórios</p>
+            <p style="color: rgb(255, 255, 255); font-size: 0.8rem;">todos os campos * são obrigatórios</p>
             <button class="btn" id="ok" type="submit" name="op" value="login">Login</button>
         </form>
     </main>

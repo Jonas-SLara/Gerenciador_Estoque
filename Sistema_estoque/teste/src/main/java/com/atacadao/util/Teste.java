@@ -3,15 +3,9 @@ package com.atacadao.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.atacadao.dao.FuncionarioDAO;
-import com.atacadao.dao.GerenteDAO;
-import com.atacadao.dao.ProdutoDAO;
-import com.atacadao.dao.UsuarioDAO;
+import com.atacadao.dao.*;
 
-import com.atacadao.model.Usuario;
-import com.atacadao.model.Funcionario;
-import com.atacadao.model.Gerente;
-import com.atacadao.model.Produto;
+import com.atacadao.model.*;
 
 class Teste {
     public static UsuarioDAO udao = new UsuarioDAO();
@@ -21,8 +15,21 @@ class Teste {
     
 
     public static void main(String[] args) {
-       mostrarProdutos(pdao.listar_produtos());
-       mostrarProdutos(gdao.listar_seus_produtos(1));
+        mostarAdmin(1);
+        mostarAdmin("12345678000199");
+        
+    }
+
+    public static void mostarAdmin(int id){
+       Admin a = AdminDAO.buscarPorId(id);
+       System.out.println("cnpj: " + a.getCnpj() + " id: " + a.getId() + " nome: " + a.getNome());
+       System.out.println("telefone:" + a.getTelefone() + " email: " + a.getEmail() + " senha: " + a.getSenha());
+    }
+
+    public static void mostarAdmin(String cnpj){
+       Admin a = AdminDAO.buscarPorCNPJ(cnpj);
+       System.out.println("cnpj: " + a.getCnpj() + " id: " + a.getId() + " nome: " + a.getNome());
+       System.out.println("telefone:" + a.getTelefone() + " email: " + a.getEmail() + " senha: " + a.getSenha());
     }
 
     public static void mostrarUsers(ArrayList<Usuario> users){
