@@ -1,0 +1,61 @@
+.form-main{
+    background-color: rgba(255, 255, 255, 0.438);
+    width: 60%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: solid white 2px;
+    box-shadow: rgba(0, 0, 0, 0.267) 0 0 5px;
+}
+
+.label{
+    width: 80%;
+    background-color: rgba(252, 246, 246, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.267) 0 4px 10px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.btn-form{
+    width: 80%;
+}
+
+.label input, .label label{
+    font-size: 1.2em;
+    padding: 4px;
+}
+
+.form-main .aviso-form{
+    font-size: 1.2em;
+    padding: 4px;
+}
+
+.filtro label{
+    display: inline-block;
+    font-weight: 500;
+    width: 100%;
+}
+
+.filtro input{
+    padding: 4px;
+    border-radius: 8px;
+    width: 60%;
+    font-size: 1.1em;
+}
+
+.form-modal{
+    width: 90%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    border: solid white 2px;
+    box-shadow: rgba(0, 0, 0, 0.267) 0 0 5px;
+}
+
+.label input:focus{
+    width: 100%;
+}

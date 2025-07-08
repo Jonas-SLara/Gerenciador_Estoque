@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-atac
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: db-atac
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql

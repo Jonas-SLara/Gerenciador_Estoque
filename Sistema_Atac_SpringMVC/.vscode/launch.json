@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Teste",
+            "request": "launch",
+            "mainClass": "com.atac.atac.util.Teste",
+            "projectName": "atac"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AtacApplication<atac>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.atac.atac.AtacApplication",
+            "projectName": "atac",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=37801 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=atac"
+        }
+    ]
+}
