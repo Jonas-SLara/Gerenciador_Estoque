@@ -1,50 +1,11 @@
-------------------------
-COMO USAR ESTE PROJETO
-------------------------
+# Sistema de Gerenciamento de Estoque e Usuários ATAC
+@author: Jonas
+___
 
-# Como executar as dependencia para o projeto
-### 1. execute na raiz do projeto onde esta o docker compose:
-```
-    docker compose up -d
-```
-### 2. para parar execute
+## Modelo Conceitual
+![imagem](./UML/ModelConceitual.drawio.png)
 
-```
-    docker compose down
-```
-### 3. OPCIONAL
-    adicionar o pgadmin como serviço adicione no docker compose:
- ```
-    pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin1234
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
-  ```
-
-## Compilar e Empacotar o projeto para war usando Maven CLI
-```
-    mvn clean package --também instala as dependencias
- ```
-
-## Exportar o banco de dados
-    1. Exportar o banco de dados
-```
-    docker exec -t postgres pg_dump -U <usuario_do_banco> <nome_do_banco> > dump.sql
-```
-
-* lembre-se de estar na raiz do projeto
-
-* ou use o pgadmin para importar os dados ou exportar mas para isso adicione o pgadmin
-    como serviço no docker compose como sugerido antes
-
-## Criação de tabelas
+## SQL das tabelas
 
 ```
 -- Tabela principal com os dados comuns de todos os usuários
@@ -84,22 +45,11 @@ CREATE TABLE produto (
     id_gerente INTEGER NOT NULL,
     FOREIGN KEY (id_gerente) REFERENCES gerente(id)
 );
-
-CREATE TABLE admin (
-    id SERIAL PRIMARY KEY,
-    cnpj CHAR(14) UNIQUE NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    telefone VARCHAR(20),
-    senha VARCHAR(60) NOT NULL
-);
 ```
 
-## Inserção de dados para testes
-```
-INSERT INTO admin (cnpj, nome, email, telefone, senha)
-VALUES ('12345678000199', 'Admin Master ATAC', 'admin@atac.com', '11999990000', 'admin1234');
+## Dados para testes e login dos usuarios
 
+```
 INSERT INTO usuario (cpf, nome, email, senha, celular, salario) VALUES
 ('12345678900', 'Carlos Gerente', 'carlos@empresa.com', '1234', '11999999999', 7000.00),
 ('23456789001', 'Luciana Supervisora', 'luciana@empresa.com', '2345', '11888888888', 7500.00),
@@ -120,3 +70,8 @@ INSERT INTO produto (nome, valor, quantidade, id_gerente) VALUES
 ('Óleo de soja 900ml', 6.50, 150, 2),
 ('Açúcar 1kg', 4.90, 180, 2);
 ```
+
+## Deploy do projeto local
+
+1. baixe o projeto
+2. onde tiver a pasta com o docker compose
