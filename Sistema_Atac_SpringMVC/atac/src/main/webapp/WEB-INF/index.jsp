@@ -24,9 +24,6 @@
             <li>
               <a href="${pageContext.request.contextPath}/cadastro">Cadastro</a>
             </li>
-            <li>
-              <a href="${pageContext.request.contextPath}/loginADM">ADM</a>
-            </li>
         </ul>
     </nav>
 

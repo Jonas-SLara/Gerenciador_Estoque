@@ -47,13 +47,15 @@
 
 .form-modal{
     width: 90%;
-    height: 70%;
+    min-height: 30vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: start;
+    gap: 20px;
     align-items: start;
     border: solid white 2px;
     box-shadow: rgba(0, 0, 0, 0.267) 0 0 5px;
+    margin-top: 20px;
 }
 
 .label input:focus{

@@ -11,22 +11,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/geral.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/formularios.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/btn.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+    <script src="${pageContext.request.contextPath}/script/modal.js" defer></script>
 </head>
 <body>
 
     <nav class="nav_menu">
         <ul>
             <li><img src="" class="logo">
-              <a class="current_page" href="${pageContext.request.contextPath}/">Atac</a>
+              <a href="${pageContext.request.contextPath}/">Atac</a>
             </li>
             <li>
-              <a href="${pageContext.request.contextPath}/login">Login</a>
+              <a class="current_page"  href="${pageContext.request.contextPath}/login">Login</a>
             </li>
             <li>
               <a href="${pageContext.request.contextPath}/cadastro">Cadastro</a>
-            </li>
-            <li>
-              <a href="${pageContext.request.contextPath}/loginADM">ADM</a>
             </li>
         </ul>
     </nav>
@@ -55,5 +54,30 @@
         </form>
     </main>
 
+    <!--Pop up de dados invalidos senha ou cpf incorretos-->
+    <c:if test="${not empty err1}">
+      <div class="overlay" style="display: block;"></div>
+
+      <div class="modal2" style="display: block;">
+        <button class="close-btn" onclick="fecharModal2()">
+            <img src="${pageContext.request.contextPath}/img/close.png">
+        </button>
+        <h2 style="text-align: center; margin-top: 30px;">${err1}</h2>
+      </div>
+
+    </c:if>
+
+    <!--pop up de usuario ainda nao cadastrado como funcionario, ou gerente-->
+    <c:if test="${not empty err2}">
+      <div class="overlay" style="display: block;"></div>
+
+      <div class="modal2" style="display: block;">
+        <button class="close-btn" onclick="fecharModal2()">
+          <img src="${pageContext.request.contextPath}/img/close.png">
+        </button>
+        <h2 style="text-align: center; margin-top: 30px">${err2}</h2>
+      </div>
+      
+    </c:if>
 </body>
 </html>

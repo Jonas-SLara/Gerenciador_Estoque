@@ -1,6 +1,11 @@
 package com.atac.atac.contoller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.atac.atac.model.Usuario;
+import com.atac.atac.service.UsuarioService;
 
 
 /*
@@ -32,10 +37,22 @@ public class HomeController {
     public String cadastro() {
         return "cadastro";
     }
-
-    @GetMapping("/loginADM")
-    public String loginADM() {
-        return "loginADM";
-    }
     
+    /*
+     * usando redirect:/cadastro, e isso perde os atributos do Model (msg ou err) na hora de redirecionar.
+     * solução: usar RedirectAttributes
+     */
+    @PostMapping("/cadastroUsuario")
+    public String cadastroUsuario(Usuario u, RedirectAttributes redirectAttributes){
+        System.out.println(u.getNome() + " " + u.getCpf() + " será cadastrada");
+        boolean sucesso = new UsuarioService().cadastrar(u);
+        
+        if(sucesso){
+            redirectAttributes.addFlashAttribute("msg", "Usuário cadastrado com sucesso!");
+        } else {
+            redirectAttributes.addFlashAttribute("err", "CPF já utilizado ou erro no sistema.");
+        }
+
+        return "redirect:/cadastro";
+    }
 }

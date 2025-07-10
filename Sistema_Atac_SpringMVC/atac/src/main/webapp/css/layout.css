@@ -53,7 +53,7 @@
    width: 100%;
 }
 
-.overlay{
+.overlay, .overlay2{
     display: none;
     position: fixed;
     z-index: 900;
@@ -64,7 +64,7 @@
     background-color: rgba(0, 0, 0, 0.74);
 }
 
-.modal, .modal3{
+.modal, .modal3, .modal4, .modal5{
     display: none;
     position: fixed;
     background-color: white;
@@ -78,7 +78,7 @@
     box-shadow: rgba(255, 255, 255, 0.5);
 }
 
-.modal2{
+.modal2, .modal6{
     display: none;
     position: fixed;
     background-color: white;
@@ -103,4 +103,12 @@
     border-radius: 20px;
     padding: 8px;
     box-shadow: rgba(255, 255, 255, 0.5);
+}
+
+.modal5 p, .modalPerfil p{
+    background-color: rgb(219, 255, 252);
+    box-shadow: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    margin: 10px 0 10px 0;
+    padding: 4px;
 }

@@ -17,4 +17,19 @@ public class UsuarioService {
         System.out.println("editando usuario " + u.getCpf());
         return udao.alterarUsuario(u);
     }
+
+    public boolean cadastrar(Usuario u){
+        u.setCpf(u.getCpf().replaceAll("[^0-9]+", "")); //formata o cpf como garantia
+        System.out.println("cadastrando... " + u.getEmail() + " " + u.getCpf());
+        return udao.inserirUsuario(u);
+    }
+
+    //se o usuario já estiver cadastrado como funcionário ou gerente, ele é especializado
+    public boolean usuarioEspecializado(Usuario u){
+        if(new FuncionarioService().buscarFuncionario(u) == null 
+            && new GerenteService().buscarGerente(u) == null) {
+            return true;
+        }
+        return false;
+    }
 }

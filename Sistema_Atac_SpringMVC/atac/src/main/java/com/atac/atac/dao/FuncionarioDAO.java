@@ -65,6 +65,7 @@ public class FuncionarioDAO {
                 u.setEmail(rs.getString("email"));
                 u.setNome(rs.getString("nome"));
                 u.setSalario(rs.getDouble("salario"));
+                u.setSenha(rs.getString("senha"));
                 f.setUsuario(u);
                 System.out.println("funcionario encontrado");
             }else{

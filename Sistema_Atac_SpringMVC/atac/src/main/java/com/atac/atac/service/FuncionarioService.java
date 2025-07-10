@@ -21,4 +21,15 @@ public class FuncionarioService {
     public ArrayList<Funcionario> lista(){
         return fdao.listar_funcionarios();
     }
+
+    public boolean cadastrarFuncionario(Funcionario f){
+        return fdao.inserir_funcionario(f);
+    }
+
+    public boolean editarFuncionario(Funcionario f){
+        return fdao.alterar_funcionario(f);
+    }
+    public boolean excluirFuncionario(int id){
+        return fdao.remover_funcionario(id);
+    }
 }

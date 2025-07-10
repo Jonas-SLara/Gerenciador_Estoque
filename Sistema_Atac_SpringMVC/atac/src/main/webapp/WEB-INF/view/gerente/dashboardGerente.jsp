@@ -21,7 +21,7 @@
         <ul>
             <li>
                 <a class="current_page" href="${pageContext.request.contextPath}/dashboardGerente">
-                    Home
+                    Home!
                 </a>
             </li>
 
@@ -69,10 +69,12 @@
             <img src="${pageContext.request.contextPath}/img/close.png">
         </button>
         <h2>Olá ${sessionScope.gerenteLogado.usuario.nome}</h2>
+        <p>Bonificação Atual: ${gerenteLogado.bonificacao}</p>
+        <p>Salário Atual: ${gerenteLogado.usuario.salario}</p>
         <p>Edite o seu perfil como preferir</p>
 
         <form method="POST" 
-        action="${pageContext.request.contextPath}/gerente/perfil/${gerenteLogado.id}/editar"
+        action="${pageContext.request.contextPath}/gerente/perfil/editar"
         class="form-modal">
             <div class="label">
                 <label for="perfil_nome">* Nome: </label>
@@ -91,7 +93,7 @@
                 <input id="perfil_celular" type="text" value="${gerenteLogado.usuario.celular}" name="celular">
             </div>
             <input type="hidden" value="${gerenteLogado.cpfUsuario}" name="cpf">
-
+            <input type="hidden" value="${gerenteLogado.usuario.salario}" name="salario">
             <div class="btn-form">
                 <button class="btn" id="ok" type="submit">
                     CONCLUIR
