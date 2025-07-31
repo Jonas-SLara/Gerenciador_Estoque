@@ -1,0 +1,26 @@
+### GET todos os livros
+GET http://localhost:8080/livros
+Accept: application/json
+
+### GET livro por ID
+GET http://localhost:8080/livros/1
+Accept: application/json
+
+### POST novo livro
+POST http://localhost:8080/livros
+Content-Type: application/json
+
+{
+  "nome": "O Senhor dos Anéis"
+}
+
+### PUT atualizar livro
+PUT http://localhost:8080/livros/1
+Content-Type: application/json
+
+{
+  "nome": "O Hobbit"
+}
+
+### DELETE livro
+DELETE http://localhost:8080/livros/1
